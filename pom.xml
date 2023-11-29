@@ -335,11 +335,12 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.6.0</version>
         <configuration>
-          <!-- Configuración específica del ensamblado si es necesaria -->
+          <descriptors>
+            <descriptor>src/assembly.xml</descriptor>
+          </descriptors>
         </configuration>
         <executions>
           <execution>
-            <id>make-assembly</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -347,6 +348,7 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 </project>
