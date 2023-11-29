@@ -1,1 +1,1 @@
-web: java -jar nombre-del-archivo.jar
+web: java -jar ejercicio.jar
