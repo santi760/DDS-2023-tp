@@ -1,0 +1,426 @@
+hola
+
+posicionar elementos arriba abajo izq derecha
+https://www.plantuml.com/plantuml/uml/SoWkIImgAStDuKhBprVGpKbDAz6rKqWfpSsjz06o8Q95cUaPSE4W40SYNbe04mmjW8Yav9VdmSHSW6mkXzIy593f0000
+
+@startuml
+!include rankings.puml
+
+ProvisionOfService --> Service
+ProvisionOfService --> Establishment
+ProvisionOfService --> Entity
+
+Establishment --> TypeEstabLishment
+
+
+Community -->"*" Service
+CommunityMember "*"<-- Community
+CommunityMember -->"*" Entity
+CommunityMember -->  User
+CommunityMember -->"*" Service
+CommunityMember -up->"*"  temporaryRoleToService
+CommunityMember -> MedioNotificacion
+
+
+temporaryRoleToService -up-> RolTemporal
+
+Entity --> type :x
+Entity --> "*" Establishment
+
+ProviderEntity -->"*" Entity
+ProviderEntity  --> User
+
+ControlOrganism  -->  User
+ControlOrganism -->"*" ProviderEntity
+ControlOrganism -->"*" Service
+
+type -down-> TypeEntity
+type -down-> typePublicTransport
+
+
+Community -->"*" Incident
+
+Incident --> ProvisionOfService
+Incident --> CommunityMember
+
+class WPP implements MedioNotificacion
+class Correo implements MedioNotificacion
+
+interface MedioNotificacion {
+    +notificate(String noticeReason,ComunityMember)
+}
+
+
+
+enum RolTemporal {
+    AFFECTED,OBSERVER
+}
+
+
+
+class temporaryRoleToService {
+    -Service service;
+    -Rol RolTemporal
+}
+
+
+
+class CommunityMember {
+    - MedioNotificacion medioNotificacion
+    - User user;
+    - String name
+    - String surname
+    - String email
+
+    - Set<Service> interestingServices
+    - Set<Entity> interestingEntities
+
+    - Province province
+    - Department departament
+    - Municipality municipality
+    - aLocality locality
+
+    -list<temporaryRoleToService> serviecesRols
+
+    + void addInterestingService(Service service)
+    + void notificate(String noticeReason)
+
+}
+
+
+
+class Community {
+    - String name
+    - Set<Service> interestingServices
+    - Set<CommunityMember> CommunityMembers
+    - Set<Incident> Openincidents
+    - Set<Incident> Closedincidents
+    -CustomProximityFinder customProximityFinder
+
+
+    + void addCommunityMember(CommunityMember member)
+    + void addInterestingService(Service service)
+
+    + void addIncidentAndNotifyUsers(Incident newIncident)
+    + closeIncidentAndNotifyMembers(Incident incident, CommunityMember closerMember, String closeObservation)
+
+    + void suggestIncidentReviewToCloseMember()
+
+}
+
+
+
+' ProvisionOfService -->"*" Incident
+class Service {
+  - String name;
+}
+
+/'
+TODO cuando se agrega un incidente y el usuario tiene muchas organizaciones, se agrega el incidente a todas las organizaciones. profundizar , esta en la grabacion de la clase
+'/
+class ProvisionOfService{
+    - Service Service;
+    - Establishment establishment;
+    - Entity entity;
+}
+
+
+
+
+
+/'
+COMENTARIO MULTILINE
+'/
+
+
+class Establishment {
+    - String name;
+    - Location location
+    - TypeEstabLishment type
+
+    - Province province
+    - Department departament
+    - Municipality municipality
+    - aLocality locality
+
+    getIncidentsOfEstablishment()
+}
+
+
+
+
+class Entity {
+    - String name;
+    - Set<Establishment> establishments;
+    - Type typeEntity
+
+    + Establishment getFirstEstablishment()
+    + Establishment getLastEstablishment()
+
+    + void addEstablishment()
+
+    + List<Incident> getIncidentsOfEntity()
+}
+
+
+class type {
+    -TypeEntity typeEntity
+    -TypePublicTransport typePublicTransport
+}
+
+enum TypeEntity {
+    PUBLIC_TRANSPORT,
+    ORGANIZATION;
+}
+enum typePublicTransport{
+    RAILWAY
+    SUBWAY
+}
+
+enum TypeEstabLishment {
+    STATION,
+    SUCURSAL;
+}
+
+
+
+
+
+class ControlOrganism {
+    -User user;
+    -String name;
+    -Set<ProviderEntity> providerEnties
+
+    +addProviderEntity(ProviderEntity)
+}
+
+
+class ProviderEntity {
+    -User user;
+    -String name;
+    -Set<Entity> entities
+    -List<Report> reports
+    +addEntity(Entity)
+}
+
+
+
+class User {
+    # String usuario;
+    # String contrasena;
+}
+
+
+class Incident {
+    -CommunityMember creator;
+    -CommunityMember closer;
+    -Date FechaDeApertura;
+    -Date fechaDeCierre;
+    -String Description
+    -ProvisionOfService provisionOfServiceAssociated;
+    -Boolean open
+
+    + void close(CommunityMember closer, String closedDescription)
+    + obtenerTiempoEntreAperturaYCierre()
+
+    + Municipality getMunicipality()
+    + Department getDepartment()
+    + Province getProvince()
+    + Locality getLocality()
+
+    + long getHoursDifferenceOpenClose()
+    + long getDaysDifferenceOpenClose()
+    + long getWeeksDifferenceOpenClose()
+    + Boolean isWithin24Hours(LocalDateTime startDate)
+}
+
+
+interface notificationPeriod {
+    actuar()
+}
+
+
+
+Community--> CustomProximityFinder
+CustomProximityFinder -->"*" ProximityFinder
+
+class CustomProximityFinder{
+List<ProximityFinder> proximityFinders
+
+    aplicateProximityFinders(Member,incident)
+}
+
+
+
+interface ProximityFinder {
+  + Boolean memberIsCloser(Members member,Incident incidente>)
+}
+
+
+
+class ProvinceSearcher implements ProximityFinder{
+
+}
+
+class MunicipalitySearcher implements ProximityFinder{
+
+}
+
+class DepartmentSearcher implements ProximityFinder{
+
+}
+
+class LocalitySearcher implements ProximityFinder{
+
+}
+
+
+ControlOrganism --> Report
+ProviderEntity --> Report
+
+CronTask --> RankingGenerator
+
+class RankingGenerator{
+
+    List<Ranking> rankings
+
+      generarRankings()
+}
+
+RankingGenerator -->"*" Ranking
+
+
+interface Ranking {
+    generar(Entidades)
+}
+
+class EntitiesAverageCloseTime implements Ranking {
+    -list<Entity> entities
+}
+
+class EntitiesReportedIncidents implements Ranking{
+    -list<Entity> entities
+}
+
+class EntitiesImpactDegree implements Ranking{
+    -list<Entity> entities
+}
+
+class Report {
+List<Raking> rankings
+}
+Report -->"*" Ranking
+
+
+
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+class PasswordValidator {
+    List<Validator> validators
+    +List<String> validate(user)
+}
+
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}
+@enduml
+-------------------------------------------------------------------------
+
+
+class Passwor10000Validation implements ValidationType {
+}
+class PasswordLengthValidation implements ValidationType {
+}
+class PasswordUsernameValidation implements ValidationType {
+}
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+
+enum Permiso{
+    EntidadPrestadora
+    MiembroComunidad
+}
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+class PasswordValidator {
+    List<String> validate(user)
+}
+
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}
+
+
+
+
+
+
+
+// aca deprecado
+class Rol {
+string name;
+List<Permiso> permisos
+}
+class Section {
+- String origin;
+- String destination;
+}
+
+estructurales, generalmente, estructuras mas complejas, integrarnos con codigo que no nos pertenece. codigo de terceros
+
+comportamiento : problemas de interaccion entre objetos en tiempo de ejecucion : (ej mas facil el state))
+
+creacionales: mencionamos el singleton unicamente.
+es para la creacion de objetos . que pueden tener una instanciacion compleja o no.
+compleja es que tiene que ser instanciado y ser configurado(darle muchos atributos hasta que pueda ser usado)
+
+
+el que le vamos a dar mucho foco es el builder.
+hay otros que son complejos que los podemos leer y estudiar por nuestra cuenta,
+
+singleton lo vimos en la parte de inyeccion de dependencias. una unica isntancia accedida de manera global.
+
+el singleton se suele ver en frameworks. pero en tu dominio rara vez tenemos uno.
+
+instancias bien conocidas de una clase que no convierten a tu clase de singleton.
+instancias a b c , son globales pero no son singleton. son bien conocidas.
+ejde tendencias musicales se ve lo anterior. clase icono, era una clase que tenia 3 instancias  bien conocidas.
+
+
+
+
+FACTORY . ENCAPSULA EN UN UNICO METODO LA CREACION DE OBJETOS
+
+SIEMPRE QUE TENES LOGICA DUPLICADA, TENES UN POTENCIAL PROBLEMA.
+
+
+SIMPLE FACTORY. ENCAPSULA EN UNA CLASE.             FALTAN IMAGENES. MUCHO TEXTO MUY ABSTRACTO VER LO QUE VE EZE.
+
+20:27 tengo que volver a ver esto del factory + static
+
+
+
+
+
+----------------------------------------------------------------
+PENSANDO
+
+yo me imagino una pantalla en la que agregas un incidente.
+
+sos un miembro, entonces por DB le traes las prestaciones de servicios que tienen sus servicios de interes
+de las comunidades que esta el miembro
+
+
+
+class Provision of service
+<> method Agregar Incidente (incidente ))

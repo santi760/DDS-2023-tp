@@ -1,0 +1,92 @@
+{{#partial "contenido"}}
+    <head>
+            <title>Monitoreo | Crear una comunidad</title>
+            <link rel="icon" href= "../images/logo-login.png"  type="image/x-icon" sizes="16x16 32x32">
+            <link href="styles/carousel.css" rel="stylesheet">
+    </head>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8" style="margin: 1rem;">
+            <div class="card">
+                <div class="card-body">
+                    <p style="font-weight: bold; font-size: 1.5rem; text-align:center">
+                        CREAR COMUNIDAD
+                    </p>
+
+
+                    <form id="createCommunityForm" action="/communities/create" method="POST">
+                        <div>
+                            <p style="font-weight: bold;" class="card-text">
+                                Ingresa el nombre de tu comunidad
+                            </p>
+                            <textarea class="form-control" name="name" rows="5" required style="resize: vertical;"
+                                placeholder="Ingresa el nombre de tu comunidad"></textarea>
+                        </div>
+                        <div>
+                            <p style="font-weight: bold;" class="card-text">
+                                Ingresa una descripción para tu comunidad
+                            </p>
+                            <textarea class="form-control" name="description" rows="5" required
+                                style="resize: vertical;"
+                                placeholder="Ingresa una descripción para tu comunidad"></textarea>
+                        </div>
+
+                        <label style="font-weight: bold;">Seleccione servicio de interés:</label><br>
+                        <select class="form-select" id="services" name="services">
+                            {{#each services}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+
+                        <label style="font-weight: bold;">Seleccione establecimiento de interés:</label><br>
+                        <select class="form-select" id="establishments" name="establishments">
+                            {{#each establishments}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                        <br>
+
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 25rem; margin: 1rem; font-weight: bold; font-size: 1.2rem;"
+                            onclick="return confirmSubmit()">
+                            Crear Comunidad
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}
+
+
+
+
+<script>
+    // Función para confirmar el envío del formulario
+    function confirmSubmit() {
+        // Mostrar una ventana de confirmación al usuario
+        var confirmacion = window.confirm('¿Estás seguro de que deseas crear una comunidad?');
+
+        // Si el usuario confirma, se enviará el formulario
+        if (confirmacion) {
+            // Obtener el formulario por su ID
+            var form = document.getElementById('incidentForm');
+
+            // Enviar el formulario
+            if (form) {
+                form.submit(); // Envía el formulario
+            }
+        }
+
+        // Devuelve false para evitar el envío predeterminado del formulario
+        return confirmacion;
+    }
+</script>

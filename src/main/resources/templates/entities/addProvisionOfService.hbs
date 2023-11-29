@@ -1,0 +1,82 @@
+{{#partial "contenido"}}
+ <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo </title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            /* Estilo para el botón */
+            button {
+                padding: 0; /* Elimina cualquier relleno interno del botón */
+                background: none; /* Establece un fondo transparente para el botón */
+                border: none; /* Elimina el borde del botón */
+                cursor: pointer;
+            }
+
+            /* Estilo para la imagen dentro del botón */
+            button img {
+                width: 150px; /* Ajusta el ancho de la imagen según tus necesidades */
+                height: auto; /* Esto mantiene la proporción original de la imagen */
+                text-align: center;
+            }
+
+            .image-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .text-container {
+                margin-top: 15px;
+            }
+        </style>
+    </head>
+ <div class="container-fluid bg-white">
+     <h1 class="text-center mt-4">Agregar Prestacion de Servicio</h1>
+ </div>
+ <br><br>
+    <body>
+    <div>
+        <div>
+            <select class="" id="services" style="font-size: 1.2rem; width: 600px; color: black; background-color: white;">
+                <option value="" hidden>Seleccione el servicio</option>
+                {{#each services}}
+                    <option value="{{this.id}}"> {{this.name}} </option>
+                {{/each}}
+            </select>
+        </div>
+        <br>
+        <div>
+            <select class="" id="establecimientos" style="font-size: 1.2rem; width: 600px; color: black; background-color: white;">
+                <option value="" hidden>Seleccione el establecimiento </option>
+                {{#each establishments}}
+                    <option value="{{this.id}}"> {{this.name}} </option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6" style="padding: 10px;">
+        <form id="upload-form" method="POST" enctype="multipart/form-data" action="/providerEntity/provisionOfService/add/service/0/establishment/1">
+            <button class="btn btn-primary" style="white-space: nowrap;">Agregar Prestacion</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('services').addEventListener('change', updateFormAction);
+        document.getElementById('establecimientos').addEventListener('change', updateFormAction);
+
+        function updateFormAction() {
+            var selectedServiceId = document.getElementById('services').value;
+            var selectedEstablecimientoId = document.getElementById('establecimientos').value;
+            var uploadForm = document.getElementById('upload-form');
+            uploadForm.action = "/providerEntity/provisionOfService/add/service/" + selectedServiceId + "/establishment/" + selectedEstablecimientoId;
+        }
+    </script>
+    </body>
+
+{{/partial}}
+{{> templates/components/layout/LayoutBaseProvider}}

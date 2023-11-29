@@ -1,0 +1,226 @@
+@startuml
+
+Member "*"<-- Community
+
+
+
+Location <-r- Establishment
+Community -->"*" Service
+Entity --> "*" Establishment
+ProvisionOfService --> Service
+ProvisionOfService --> Establishment
+Member --> Location
+Member -->"*" Service
+
+Establishment --> TypeEstabLishment
+
+Company --> CompanyType
+
+
+Member -->"*" Entity
+class Member {
+- String name
+- String surname
+- String email
+- Location location
+- Set<Service> interestingServices
+- Set<Entity> interestingEntities
++ void addInterestingService(Service service)
+
+}
+
+
+
+
+class Community {
+- String name
+- Set<Service> interestingServices
+- Set<Member> members
+
++ void addMember(Member member)
++ void addInterestingService(Service service)
+}
+
+' This is a comment on a single line
+class Service {
+  - String name;
+  - Map<String, Boolean> subcomponents
+}
+
+/'comentario multilinea
+
+'/
+class ProvisionOfService{
+- Service Service;
+- Establishment establishment;
+- Boolean Enable;
+}
+
+/'
+VER QUE ONDA SECTION
+ES PARA ESCALERAS MECANICAS
+'/
+
+
+
+
+
+class Location{
+  - double latitud
+  - double longitud
+}
+
+class Establishment {
+- String name;
+- Location location
+- TypeEstabLishment type
+
+}
+
+
+
+
+class Entity {
+- String name;
+- Set<Establishment> establishments;
+- Type typeEntity
+
++ Establishment getFirstEstablishment()
++ Establishment getLastEstablishment()
++ void addEstablishment()
+}
+
+Entity --> type :x
+
+type -> TypeEntity
+type -> typePublicTransport
+class type {
+TypeEntity typeEntity
+TypePublicTransport typePublicTransport
+}
+
+enum TypeEntity {
+PUBLIC_TRANSPORT,
+ORGANIZATION;
+}
+enum typePublicTransport{
+RAILWAY
+SUBWAY
+}
+
+enum TypeEstabLishment {
+STATION,
+SUCURSAL;
+}
+
+
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+interface ValidationType{
++public String getErrorMessage()
++public boolean validatePassword(user)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+abstract class User {
+ # String usuario;
+  #  String contrasena;
+
+
+  agregarPermiso(permiso)
+}
+
+class UserMember extends User {
+Member member
+}
+class UserCompany extends User {
+Company company
+}
+
+
+enum CompanyType {
+ORGANISMO_CONTROL,
+ENTIDAD_PRESTADORA;
+}
+
+class Company{
+    -String name;
+    -CompanyType type;
+}
+
+
+class Member{
+
+}
+
+
+
+UserCompany --> Company
+UserMember--> Member
+
+
+
+
+
+@enduml
+
+class Passwor10000Validation implements ValidationType {
+}
+
+class PasswordLengthValidation implements ValidationType {
+}
+
+class PasswordUsernameValidation implements ValidationType {
+}
+
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+
+enum Permiso{
+EntidadPrestadora
+MiembroComunidad
+}
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+class PasswordValidator {
+List<String> validate(user)
+}
+
+
+interface ValidationType{
++public String getErrorMessage()
++public boolean validatePassword(user)
+}
+
+
+
+
+
+
+
+// aca deprecado
+class Rol {
+string name;
+List<Permiso> permisos
+}
+class Section {
+- String origin;
+- String destination;
+}

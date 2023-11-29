@@ -1,0 +1,48 @@
+{{#partial "contenido"}}
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin: 20px auto;
+                max-width: 600px;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <h2>Crear un Proveedor de Servicios</h2>
+        <form id="createProviderForm" action="/providerEntity/create" method="POST">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label>Selecciona el Servicio Asociado:</label><br>
+            <select id="services" name="services">
+                {{#each services}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select><br><br>
+
+            <label>Selecciona el Establecimiento Asociado:</label><br>
+            <select id="establishments" name="establishments">
+                {{#each establishments}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select><br><br>
+
+            <button type="submit" >Crear Provisión</button>
+        </form>
+    </div>
+    </body>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseProvider }}
+

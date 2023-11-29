@@ -1,0 +1,132 @@
+{{#partial "contenido"}}
+    <head>
+            <title>Monitoreo | Unirse a una comunidad</title>
+            <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+              <link href="styles/carousel.css" rel="stylesheet">
+    </head>
+
+    <div class="container">
+        {{#if state}}
+        <h1>Unete a una comunidad</h1>
+            <div class="row">
+                {{#each community}}
+                    <div class="card">
+                            <div class="card-body">
+                                <p class="card-title">{{name}}</p>
+                                <p class="card-text">{{description}}</p>
+                                <form action="/communities/join/{{this.id}}" method="POST">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary join-button" onclick="return confirmSubmit()">Ingresar</button>
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            <div class="empty-state">
+                <img src="/images/sad.svg" alt="Sad Face">
+                <p class="empty-state-message">No hay comunidades disponibles. Parece que te has unido a todas.</p>
+                <div class="action-buttons">
+                    <a href="javascript:history.back()" class="btn btn-secondary back-button">Volver</a>
+                    <a href="/communities/create" class="btn btn-primary create-button">Crear una nueva</a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+
+    <script>
+        // Función para confirmar el envío del formulario
+        function confirmSubmit() {
+          // Mostrar una ventana de confirmación al usuario
+          var confirmacion = window.confirm('¿Estás seguro de que deseas unirte a esta comunidad?');
+
+          // Si el usuario confirma, se enviará el formulario
+          if (confirmacion) {
+            // Obtener el formulario por su ID
+            var form = document.getElementById('incidentForm');
+
+            // Enviar el formulario
+            if (form) {
+              form.submit(); // Envía el formulario
+            }
+          }
+
+          // Devuelve false para evitar el envío predeterminado del formulario
+          return confirmacion;
+        }
+    </script>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}
+
+        <style>
+            /* Estilos personalizados */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+
+            .empty-state {
+              text-align: center;
+              margin-top: 2rem;
+            }
+
+            .empty-state img {
+              width: 100px;
+              height: 100px;
+            }
+
+            .empty-state-message {
+              margin-top: 1rem;
+              font-size: 1.2rem;
+            }
+
+            .action-buttons {
+              margin-top: 1rem;
+              display: flex;
+              justify-content: space-around;
+            }
+
+            .back-button,
+            .create-button {
+              width: 10rem;
+              font-weight: bold;
+              font-size: 1rem;
+            }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            margin: 10px;
+            width: 300px; /* Ajusta el ancho según sea necesario */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+            color: #343a40; /* Color gris oscuro */
+        }
+
+
+                    .join-button {
+                        width: 100%; /* O ajusta según sea necesario */
+                        margin-top: 10px;
+                        font-weight: bold;
+                        font-size: 1rem;
+                    }
+        </style>

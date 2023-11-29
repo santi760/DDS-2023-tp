@@ -1,0 +1,111 @@
+@startuml
+
+
+ProviderEntity --> Report
+Report -->"*" Ranking
+
+
+
+class ProviderEntity {
+    +String name
+    +Set<Entity> entities
+    +List<Report> historicReports
+    -Report weeklyReport
+
+   + addReportToRecord(Report)
+   + getWeeklyReport()
+}
+
+
+abstract class Ranking {
+
+    +getDataFromRanking() : List<Entity>
+    +getName() : String
+    +generate(List<Entity>) : void
+}
+
+class EntitiesAverageCloseTime extends Ranking {
+    +String name
+    +List<Entity> sortedEntities
+
+    +getName() : String
+    +getDataFromRanking() : List<Entity>
+    +generate(List<Entity>) : void
+    -int compareByAverageIncidentClosingTimePerWeek(Entity a, Entity b)
+}
+
+class EntitiesReportedIncidents extends Ranking{
+    +String name
+    +List<Entity> sortedEntities
+
+    +getName() : String
+    +getDataFromRanking() : List<Entity>
+    +generate(List<Entity>) : void
+    -filteredIncidentsFromEntity(Entity) : List<Incident>
+    - compareByFilteredIncidentCount(Entity A, Entity B) : int
+    - NO EXISTE existsAnotherIncidentAtSameProvisionOfService(List<Incident>,Incident) : Boolean
+}
+
+class EntitiesImpactDegree extends Ranking{
+    -HAY QUE HACERLO
+    +String name
+    +List<Entity> sortedEntities
+
+     +getName() : String
+     +getDataFromRanking() : List<Entity>
+     +TODO  generate(List<Entity>)
+}
+
+
+class Report implements Exportable {
+    -String name
+    -List<Raking> rankingsToInclude
+    -LocalDateTime processingDate
+    -Map<String,List<String>> reportData
+
+    +reportData() : Map<String,List<String>>
+    +generateReport(List<Entity> entities)
+    +List<String> convert(List<Entity> entities)
+    +addRanking(Ranking ranking)
+
+    -generateRankings(List<Entity>)
+}
+
+
+
+' -------abajo extrategia modulo exportador:---------
+
+ExportToPDF --> AdapterExporterToPDF
+Exporter --> ExporterStrategy
+Exporter --> Exportable
+
+class Exporter {
+    documentoAExportar : Exportable
+    estrategia : ExporterStrategy
+    cambiarEstrategia(ExporterStrategy)
+}
+
+interface Exportable {
+    reportData() : Map<String,List<String>>
+}
+
+interface ExporterStrategy {
+     export(Exportable) : String
+}
+
+class ExportToPDF implements  ExporterStrategy {
+
+    adapter: AdapterPDFExporter
+    export(Exportable) : String
+}
+
+interface AdapterExporterToPDF {
+export(Exportable) : String
+}
+
+class AdapterApachePDFBox implements AdapterExporterToPDF{
+    export(Exportable) : String
+}
+
+@enduml
+

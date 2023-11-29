@@ -1,0 +1,57 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="card-title">Agregar nuevo servicio de interés</h2>
+
+                <form id="serviceForm">
+                    <div class="form-group">
+                        <label for="servicio"><b>Servicio:</b></label>
+                        <select name="select_servicio" class="form-control form-control-lg" id="servicio">
+                            {{#each services}}
+                                <option value="{{this.name}}">{{name}}</option>
+                            {{/each}}
+                            <option value="" hidden>Seleccionar servicio</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="/dashboard" type="button" id="agregarServicio" class="btn btn-primary btn-lg mt-3">Agregar Servicio</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}
+
+<script>
+    document.getElementById("agregarServicio").addEventListener("click", function () {
+        // Obtén el valor seleccionado del <select>
+        const servicioSelect = document.getElementById("servicio");
+        const selectedService = servicioSelect.options[servicioSelect.selectedIndex].value;
+
+        // Crea un objeto JSON con los datos que deseas enviar al backend
+        const data = {
+            select_servicio: selectedService
+        };
+
+        // Realiza la solicitud POST al backend utilizando Fetch
+        fetch("addInterestingService", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+                .then(response => response.json())
+                .then(result => {
+                    // Maneja la respuesta del servidor si es necesario
+                    console.log(result);
+                })
+                .catch(error => {
+                    // Maneja los errores de la solicitud
+                    console.error(error);
+                });
+    });
+</script>

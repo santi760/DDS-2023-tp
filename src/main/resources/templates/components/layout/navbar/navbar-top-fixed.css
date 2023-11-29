@@ -1,0 +1,14 @@
+/* Show it is fixed to the top */
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+
+/* Estilo para el navbar */
+.navbar {
+    position: fixed; /* Fija el navbar en la parte superior de la página */
+    top: 0; /* Ajusta la posición superior para que esté pegado en la parte superior */
+    width: 100%; /* Ancho completo del navbar */
+    z-index: 1000; /* Ajusta la propiedad z-index para que esté por encima del sidebar */
+    background-color: black; /* Cambia 'your-color' al color de fondo deseado */
+}

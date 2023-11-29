@@ -1,0 +1,36 @@
+@startuml
+
+class User {
+
+}
+
+class Member {}
+
+class UserMember extends User {
+Member
+}
+
+UserMember --> Member
+
+
+class ControlOrganism extends User {
+
+Set<ProviderEntity> providerEnties
+}
+
+class ProviderEntity extends User{
+
+Set<Entity> entities
+
+}
+
+class Entity {
+}
+
+
+ControlOrganism  --> "*" Service
+ProviderEntity--> "*" Entity
+
+@enduml
+
+

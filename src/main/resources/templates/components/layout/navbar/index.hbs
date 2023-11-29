@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        body {
+            min-height: 75rem;
+            padding-top: 4.5rem;
+        }
+
+        /* Estilos normales para la marca */
+        .navbar-brand {
+            transition: transform 0.3s; /* Agregamos transición para un efecto suave */
+        }
+
+        .navbar-brand img {
+            transition: transform 0.3s; /* Agregamos transición para un efecto suave */
+        }
+
+        /* Estilos para hover en la marca */
+        .navbar-brand:hover {
+            transform: scale(1.1); /* Agrandamos el tamaño al pasar el ratón */
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.1); /* Agrandamos el tamaño al pasar el ratón */
+        }
+
+        /* Movemos el botón de cerrar sesión a la derecha */
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .navbar-nav {
+            margin-right: auto;
+        }
+    </style>
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo-login.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+            Monitoreo
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="d-flex">
+                <a href="/log-out" class="btn btn-danger me-2">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

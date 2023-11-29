@@ -1,0 +1,81 @@
+@startuml
+
+class Location{
+  - double latitud
+  - double longitud
+}
+
+interface GeorefService {
++ListadoDeProvincias provincias
++ListadoDeMunicipios municipios
++ListadoDeDepartamentos departamentos
+}
+
+class Centroide {
++ double lat;
++ double lon;
+
+}
+
+class Provincia{
++ int id
++ String name
++ Centroide centroide
+}
+
+class Municipio{
++ int id
++ String name
++ Centroide centroide
+}
+
+class Departamento{
++ int id
++ String name
++ Centroide centroide
+}
+
+class ListadoDeProvincias{
++ int cantidad
++ int total
++ int inicio
++ List<Provincia> provincias
+}
+
+class ListadoDeMunicipios{
++ int cantidad
++ int total
++ int inicio
++ List<Municipio> municipios
+}
+
+class ListadoDeDepartamentos{
++ int cantidad
++ int total
++ int inicio
++ List<Departamento> departamentos
+}
+
+class ServicioGeoref{
++ListadoDeProvincias provincias
++ListadoDeMunicipios municipios
++ListadoDeDepartamentos departamentos
+}
+
+ListadoDeProvincias -->"*" Provincia
+ListadoDeDepartamentos -->"*" Departamento
+ListadoDeMunicipios -->"*" Municipio
+
+ServicioGeoref --> ListadoDeDepartamentos
+ServicioGeoref --> ListadoDeProvincias
+ServicioGeoref --> ListadoDeMunicipios
+
+Municipio --> Centroide
+Provincia --> Centroide
+Departamento --> Centroide
+
+Location ..|> ServicioGeoref
+ServicioGeoref ..|> GeorefService
+
+
+@enduml

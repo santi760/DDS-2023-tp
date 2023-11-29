@@ -1,0 +1,24 @@
+
+dudas abiertas:
+
+
+tiene sentido que por una comunidad te avisen por correo y por otra comunidad te avisen por wpp?
+es decir el medio de notificacion tiene que estar en el usuario o en el member
+
+
+a mi personalmente me gustaria que me notifiquen todo por un mismo lado pero tambien quiero silenciar
+algunas comunidades.
+
+puede que cada member vos le tengas que decir por donde tenes q comunicar.
+
+
+
+
+
+
+dudas cerradas:
+
+cuando agregas un incidente a la prestacion de servicios
+lo agregas a la lista de incidentesAbiertos y tambien seteas el Enable en false.
+
+estaria bueno tener una lista de incidentes Cerrados?

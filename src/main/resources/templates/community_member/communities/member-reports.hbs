@@ -1,0 +1,150 @@
+{{#partial "contenido"}}
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+                color: #495057;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                max-width: 800px;
+                margin-top: 50px;
+            }
+
+            .search-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .member-card {
+                position: relative;
+                margin-bottom: 20px;
+                background-color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                overflow: hidden;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .member-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .member-info {
+                padding: 20px;
+                position: relative; /* Añadido para posicionar el botón correctamente */
+            }
+
+            .member-name {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #007bff;
+                margin-bottom: 10px;
+            }
+
+            .member-role {
+                font-size: 1rem;
+                color: #6c757d;
+            }
+
+            .expel-button {
+                position: absolute;
+                bottom: 10px; /* Ajuste de la posición desde abajo */
+                right: 10px; /* Ajuste de la posición desde la derecha */
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .expel-button:hover {
+                background-color: #c82333;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <h1 class="text-center mb-4">Comunidad: {{community.name}}</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar miembro...">
+            <select id="roleFilter">
+                <option value="">Todos los roles</option>
+                {{#each communityRoles}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="row" id="memberList">
+            {{#each communityMembers}}
+                <div class="col-md-6">
+                    <div class="member-card" data-name="{{this.getPerson.name}}" data-role="{{this.rolInCommunity}}">
+                        <div class="member-info">
+                            <p class="member-name">{{this.getPerson.name}}</p>
+                            <p class="member-role">Rol: {{this.rolInCommunity}}</p>
+                            {{#if esAdmin}}
+                                <form action="/communities/{{community.id}}/deleteCommunityMember/{{this.id}}" method="POST">
+                                    <button type="submit" class="expel-button">Expulsar</button>
+                                </form>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Filtrar la lista al escribir en el campo de búsqueda
+            $("#searchInput").on("input", function () {
+                filterMembers();
+            });
+
+            // Filtrar la lista al seleccionar un rol
+            $("#roleFilter").on("change", function () {
+                filterMembers();
+            });
+
+            function filterMembers() {
+                const searchValue = $("#searchInput").val().toLowerCase();
+                const roleFilter = $("#roleFilter").val();
+
+                $(".member-card").each(function () {
+                    const memberName = $(this).data("name").toLowerCase();
+                    const memberRole = $(this).data("role");
+
+                    const nameMatch = memberName.includes(searchValue);
+                    const roleMatch = roleFilter === "" || memberRole === roleFilter;
+
+                    if (nameMatch && roleMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
+    </body>
+    </html>
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}

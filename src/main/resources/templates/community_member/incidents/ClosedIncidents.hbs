@@ -1,0 +1,129 @@
+
+{{#partial "contenido"}}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | {{community.name}}</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .community {
+            border: 2px solid #007bff;
+            border-radius: 15px;
+            margin: 1.5rem;
+            padding: 1.5rem;
+            width: 100%;
+        }
+
+        .community-title {
+            font-weight: bold;
+            font-size: 1.6rem;
+            color: #007bff;
+            margin: 0;
+        }
+
+        .comment-box {
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .separator {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #007bff;
+            margin: 1rem 0;
+        }
+
+        .community-description {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .service {
+            width: calc(48% - 20px);
+            border-radius: 15px;
+            margin: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 0 0 2px #007bff; /* Superponemos un borde azul con box-shadow */
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #007bff;
+            margin: 0;
+            margin-bottom: 1rem; /* Agregamos un margen inferior para separar del botón */
+        }
+
+        .card-description {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 1rem; /* Añadimos margen inferior */
+        }
+
+        .report-button {
+            font-size: 1rem;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+
+<head>
+
+    <h1 style="font-size: 3rem; font-weight: bold; text-align: center; color: #007bff; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); animation: neon-glow 1.5s infinite alternate; letter-spacing: 4px;">MIS COMUNIDADES</h1>
+
+    <div class="container">
+        {{#each comunidadesPersona}}
+            <div class="community">
+                <a style="text-decoration: none; color: inherit;">
+                    <p class="community-title">{{this.name}}</p>
+                    <p class="community-description">{{this.description}}</p>
+                </a>
+                <div class="comment-box">
+                    <p class="separator">Incidentes</p>
+                    <div class="closedIncidents">
+                        {{#each this.closedIncidents}}
+                            <div class="closedIncident">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-description">Incidente: {{this.openingDescription}}</p>
+                                        <p style="font-size: 1.1rem;">🔴 Cerrado</p>
+                                        <p style="font-size: 1rem;">Abierto el día {{openingDate.getDayOfMonth}}/{{openingDate.getMonth.getValue}}/{{openingDate.getYear}} a las {{openingDate.getHour}}:{{openingDate.getMinute}}</p>
+                                        <p style="font-size: 1rem;">Cerrado el día {{closingDate.getDayOfMonth}}/{{closingDate.getMonth.getValue}}/{{closingDate.getYear}} a las {{closingDate.getHour}}:{{closingDate.getMinute}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}
+

@@ -1,0 +1,91 @@
+{{#partial "contenido"}}
+    <style>
+        /* Estilo para el botón */
+        button {
+            padding: 0; /* Elimina cualquier relleno interno del botón */
+            background: none; /* Establece un fondo transparente para el botón */
+            border: none; /* Elimina el borde del botón */
+            cursor: pointer;
+        }
+
+        /* Estilo para la imagen dentro del botón */
+        button img {
+            width: 150px; /* Ajusta el ancho de la imagen según tus necesidades */
+            height: auto; /* Esto mantiene la proporción original de la imagen */
+            text-align: center;
+        }
+    </style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | Cargar Establecimientos</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="estilos.css">
+    </head>
+
+    <div class="container-fluid bg-white">
+        <h1 class="text-center mt-4">Carga de Servicios</h1>
+        <h2 class="text-center mt-6" style="font-size: 11px;">Por favor, agregue un archivo .csv con los servicios a agregar</h2>
+        <a id="download-link" href="/csv-files/services.csv" download="servicios-ejemplo.csv">
+            <button>
+                <img src="/images/boton-descarga.png">
+            </button>
+        </a>
+    </div>
+    <div class="container mt-4">
+        <div class="text-center" id="upload-section">
+            <label for="csv-file">
+                <h2 class="mb-3 bg-primary text-white p-2" style="font-size: 20px;">Suba un archivo CSV</h2>
+                <div class="image-container">
+                    <img src="/images/CloudUploadCSV.png" alt="Imagen de carga de archivo CSV" class="img-fluid img-clickable" style="width: 75%;">
+                    <div class="text-container">
+                        <div class="bg-light py-3 text-center" id="file-name" style="max-width: 75%;">
+                            <form id="upload-form" method="POST" enctype="multipart/form-data" action="/upload/services">
+                                <input type="file" id="csv-file" name="input-csv" accept=".csv" style="display: none;">
+                                <button class="btn btn-primary" style="white-space: nowrap;">Subir Servicios</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+    <!-- Agregado el código para mostrar el nombre del archivo y mensaje de error -->
+    <script>
+        document.getElementById('csv-file').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            var existingFileDisplay = document.getElementById('file-display');
+            if (existingFileDisplay) {
+                existingFileDisplay.textContent = "Usted seleccionó: " + fileName;
+            } else {
+                var fileDisplay = document.createElement("div");
+                fileDisplay.textContent = "Usted seleccionó: " + fileName;
+                fileDisplay.id = "file-display";
+                fileDisplay.className = "bg-primary text-white p-2 mt-2";
+                document.getElementById('file-name').appendChild(fileDisplay);
+            }
+        });
+
+        document.querySelector("form").addEventListener('submit', function(e) {
+            if (document.getElementById('csv-file').files.length === 0) {
+                e.preventDefault();
+                alert("Debe ingresar un archivo CSV");
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .text-container {
+            margin-top: 15px;
+        }
+    </style>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseOrgControl}}

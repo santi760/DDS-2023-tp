@@ -1,0 +1,345 @@
+{{#partial "contenido"}}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f0f5f9;
+                color: #333;
+                margin: 0;
+                padding: 0;
+                transition: background-color 0.3s ease-in-out;
+            }
+
+            .container {
+                max-width: 960px;
+                margin: 2rem auto;
+                padding: 1rem;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                transition: box-shadow 0.3s ease-in-out;
+            }
+
+            .header {
+                background-color: #3498db;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                padding: 10px;
+                line-height: 1;
+                font-size: 2rem;
+            }
+
+            .description {
+                font-size: 1rem;
+                color: #555;
+                margin-bottom: 1rem;
+            }
+
+            .ver-miembros-button {
+                background-color: #ecf0f1; /* Cambiado a un tono más claro */
+                color: #3498db; /* Cambiado a azul */
+                border: none;
+                border-radius: 5px;
+                padding: 10px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 10px; /* Reducida la separación */
+                max-width: 200px;
+            }
+
+            .ver-miembros-button img {
+                margin-right: 10px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .ver-miembros-button:hover {
+                background-color: #3498db;
+                color: #fff; /* Cambiado a blanco */
+                font-weight: bold;
+            }
+
+            .comment-box {
+                background-color: #fff;
+                border: 2px solid #ccc;
+                border-radius: 15px;
+                padding: 1.5rem;
+                margin-top: 1rem; /* Reducida la separación */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+            .separator {
+                font-weight: bold;
+                font-size: 1.2rem;
+                color: #3498db;
+                margin: 1rem 0;
+            }
+
+            .services {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                margin-top: 1rem;
+            }
+
+            .service {
+                background-color: #ecf0f1;
+                border: 2px solid #bdc3c7;
+                border-radius: 10px;
+                padding: 1rem;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin: 1rem;
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                width: calc(30% - 2rem);
+                text-align: center;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .card {
+                border: none;
+                background-color: transparent;
+                border-radius: 15px;
+                padding: 0;
+                margin: 0;
+            }
+
+            .card-title {
+                font-weight: bold;
+                font-size: 1rem;
+                color: #3498db;
+                margin: 0;
+                white-space: normal; /* Mostrar el texto completo */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: center;
+            }
+
+            .card-description {
+                font-size: 0.8rem;
+                color: #555;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+
+            .each-service {
+                font-size: 0.8rem;
+            }
+
+            .toggle-button {
+                display: inline-block;
+                background-color: #3498db;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                margin: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+
+            .toggle-button:hover {
+                background-color: #1f68c1;
+                transform: scale(1.05);
+            }
+
+            .toggle-button.active {
+                background-color: #1f68c1;
+            }
+
+            .toggle-button.active:hover {
+                background-color: #1a5288;
+            }
+
+            .add-remove-buttons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 1rem;
+            }
+
+            .add-button,
+            .remove-button {
+                background-color: #2ecc71;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+
+            .add-button:hover {
+                background-color: #27ae60;
+                transform: scale(1.05);
+            }
+
+            .remove-button {
+                background-color: #e74c3c;
+            }
+
+            .remove-button:hover {
+                background-color: #c0392b;
+                transform: scale(1.05);
+            }
+
+
+        </style>
+    </head>
+
+    <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>Comunidad: {{community.name}}</h1>
+                <p>
+                    <span>Cantidad de miembros:</span> {{community.members.length}}<br>
+                    <span>Detalle:</span> {{community.description}}
+                </p>
+                <a href="/communities/{{community.id}}/members" class="ver-miembros-button">
+                    <img src="/images/miembro.png" alt="Ícono de Miembros">
+                    Ver Miembros
+                </a>
+            </div>
+        </div>
+
+        <div class="comment-box">
+            <div style="text-align: center; margin: 20px 0;">
+                <div>
+                    <button id="showServices" class="toggle-button active">Mostrar Servicios</button>
+                    <button id="showEstablishments" class="toggle-button">Mostrar Establecimientos</button>
+                </div>
+            </div>
+
+            <p class="separator" id="servicesTitle">Servicios de Interés de la Comunidad</p>
+            <div class="services" id="servicesSection">
+                {{#each community.interetingSerices}}
+                    <div class="service card">
+                        <div class="card-body">
+                            <p class="card-title">{{this.name}}</p>
+                            <p class="each-service">{{this.label}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            <p class="separator" id="establishmentsTitle" style="display: none;">Establecimientos de Interés de la Comunidad</p>
+            <div class="services" id="establishmentsSection" style="display: none;">
+                {{#each community.interetingEstablishment}}
+                    <div class="service card">
+                        <div class="card-body">
+                            <p class="card-title">{{this.name}}</p>
+                            <p class="card-description">{{this.description}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+
+        <div class="add-remove-buttons">
+        {{#if isAdministrator}}
+            <a href="/communities/{{community.id}}/add">
+                <button class="add-button">Agregar</button>
+            </a>
+            {{/if}}
+
+            {{#unless isAdministrator}}
+            <div class="exit-button">
+                 <button class="toggle-button" data-toggle="modal" data-target="#confirmModal">Salir de la Comunidad
+                 </button>
+            </div>
+            {{/unless}}
+
+            {{#if isAdministrator}}
+            <a href="/communities/{{community.id}}/remove">
+                <button class="remove-button">Quitar</button>
+            </a>
+            {{/if}}
+        </div>
+    </div>
+
+<!-- Confirm Modal -->
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Abandono de comunidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas abandonar la comunidad?
+            </div>
+            <div class="modal-footer" style="text-align: center;"> <!-- Centro los botones -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 10px;">Cancelar</button>
+                <form action = "/communities/{{community.id}}/exit" method="POST" id="delateMemberForm">
+                <button type="submit" class="btn btn-success" onclick="submitForm()" style="background-color: #28a745; border-color: #28a745;">
+                    Abandonar
+                    <img src="/images/okay.png" alt="Okay" style="width: 16px; height: 16px; margin-left: 5px;">
+                </button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+    function submitForm() {
+        document.getElementById("delateMemberForm").submit();
+    }
+        const showServicesButton = document.getElementById('showServices');
+        const showEstablishmentsButton = document.getElementById('showEstablishments');
+        const servicesTitle = document.getElementById('servicesTitle');
+        const establishmentsTitle = document.getElementById('establishmentsTitle');
+        const servicesSection = document.getElementById('servicesSection');
+        const establishmentsSection = document.getElementById('establishmentsSection');
+
+        showServicesButton.addEventListener('click', () => {
+            showServicesButton.classList.add('active');
+            showEstablishmentsButton.classList.remove('active');
+            servicesSection.style.display = 'flex';
+            establishmentsSection.style.display = 'none';
+            servicesTitle.style.display = 'block';
+            establishmentsTitle.style.display = 'none';
+        });
+
+        showEstablishmentsButton.addEventListener('click', () => {
+            showServicesButton.classList.remove('active');
+            showEstablishmentsButton.classList.add('active');
+            servicesSection.style.display = 'none';
+            establishmentsSection.style.display = 'flex';
+            servicesTitle.style.display = 'none';
+            establishmentsTitle.style.display = 'block';
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}

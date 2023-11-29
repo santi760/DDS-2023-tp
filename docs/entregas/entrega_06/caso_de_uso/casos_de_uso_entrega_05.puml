@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+
+
+' Este para los miembrosComunidad'
+rectangle x {
+  usecase (Registrarse a Comunidad) as ResgistrarAComunidad
+  usecase (Registarse en la Plataforma) as RegistarseEnPlataforma
+  usecase (Gestionar Notificaciones) as AdministrarNotificaciones
+  usecase (Gestionar Servicio de Intereses) as GestionarInteres
+}
+
+rectangle Transporte {
+  usecase (Alta,Baja,Modificacion Transportes) as ABM_Transportes
+  usecase (Alta,Baja,Modificacion Estaciones) as ABM_estaciones
+}
+
+rectangle Comunidad {
+  usecase (Alta,Baja,Modificacion Comunidades) as ABM_Comunidades
+  usecase (Validar y Crear Admin de las Comunidades) as Validar_Crear_Comunidades
+  usecase (Gestionar incidentes) as GestionarInicidentes
+}
+
+rectangle EntidadPrestadoraR {
+  usecase (Obtener Problematicas de servicios) as obtenerProm
+  usecase (Obtener Reportes Semanales) as ReportesSemanales
+}
+
+
+
+MiembroComunidad -- ResgistrarAComunidad
+MiembroComunidad -- RegistarseEnPlataforma
+MiembroComunidad -- GestionarInicidentes
+MiembroComunidad -- GestionarInteres
+
+AdministradorComunidad -- AdministrarNotificaciones
+AdministradorComunidad -- ABM_Transportes
+AdministradorComunidad -- ABM_estaciones
+
+
+ProveedorPlataforma -- ABM_Comunidades
+ProveedorPlataforma -- Validar_Crear_Comunidades
+ProveedorPlataforma -- ABM_Transportes
+ProveedorPlataforma -- ABM_estaciones
+
+EntidadPrestadora -- obtenerProm
+EntidadPrestadora -- ReportesSemanales
+
+@enduml
+
+
+

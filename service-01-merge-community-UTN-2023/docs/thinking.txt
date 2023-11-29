@@ -1,0 +1,25 @@
+/* STEPS:
+
+// ● Coincidan en más del 75% de los establecimientos observados
+// ● Coincidan en más del 75% de los servicios estándares observados
+// ● Tengan un mismo grado de confianza
+// ● Tengan un 5% de usuarios en común
+
+//! entonces lo que debemos hacer es tener una function que se llame fusion de comunidad y la logica esta distribuida en 4 funciones pequeñas que retornan un booleano si se cumple la condicion
+
+//TODO IMPORTANTE. no tenemos que tener ningun valor harcodeado idealmente, estaria bueno recibirlo por parametro.
+// podemos hacer que se reciba un numero que sea el porcentaje de cada cosa.
+
+//** en cuanto a */
+
+// ● No sé podrá tener 2 propuestas de fusión para una misma comunidad a la vez.
+// ● No sé podrá repetir la propuesta de fusión de 2 comunidades por 6 meses.
+
+//TODO: la funcion debe validar que no sea la misma comunidad a fusionar. es decir: com1 fusion com1 da error.
+//TODO: la comunidad debe tener un atributo , date: ultimaPropuestaFusion. si ese atributo es menor a 6 meses, damos error.
+
+// TODO: consultar en que se basa esto porque no lo entiendo. estimo que es devolver una comunidad nueva pero en cuanto a la inactivacion de las otras??
+
+// El servicio, además, recibirá la aceptación o rechazo de una fusión. En caso de aceptación procederá a
+// generar la fusión creando una nueva comunidad e inactivando las anteriores. La nueva comunidad será
+// una combinación de las comunidades originales.

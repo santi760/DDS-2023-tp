@@ -1,0 +1,51 @@
+{{#partial "contenido"}}
+    <div style="margin-top: 50px;">
+        <h2>Entidades prestadoras</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each providerEntities}}
+                <tr>
+                    <td>{{ this.name }}</td>
+                    <td style="text-align: right;">
+                        <form method="POST" action="/controlOrganism/{{controlOrganism.id}}/add/providerEntity/{{this.id}}">
+                            <button onclick="return confirmSubmit()" type="submit" class="btn btn-primary">Agregar</button>
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseOrgControl}}
+
+
+
+<script>
+    // Función para confirmar el envío del formulario
+    function confirmSubmit() {
+        // Mostrar una ventana de confirmación al usuario
+        var confirmacion = window.confirm('¿Estás seguro de que deseas hacer esta acción ?');
+
+        // Si el usuario confirma, se enviará el formulario
+        if (confirmacion) {
+            // Obtener el formulario por su ID
+            var form = document.getElementById('incidentForm');
+
+            // Enviar el formulario
+            if (form) {
+                form.submit(); // Envía el formulario
+            }
+        }
+
+        // Devuelve false para evitar el envío predeterminado del formulario
+        return confirmacion;
+    }
+</script>

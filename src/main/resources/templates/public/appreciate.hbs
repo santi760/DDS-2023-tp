@@ -1,0 +1,42 @@
+{{#partial "contenido"}}
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | Agradecimiento</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap aquí -->
+</head>
+
+<div style="align-items: center;
+justify-content: center;
+display: grid;
+padding: 20px;
+font-family: math;">
+
+    <div>
+        <h1>{{message}}</h1>
+    </div>
+
+    <div style="text-align: center;">
+
+       <img src="https://i.ibb.co/T80C0Kb/ganar.png" alt="ganar" border="0">
+        <h4>TU APORTE ES MUY IMPORTANTE PARA LA COMUNIDAD</h4>
+    </div>
+
+    {{#if existRedirect}}Parece que no hay incidentes abiertos en esta comunidad en este momento.
+        <div>
+            <a href="{{endpoint}}" class="btn btn-primary btn-lg btn-block">{{textoRedireccion}}</a>
+        </div>
+    {{else}}
+        <div style="text-alignt:center">
+            <a href="/dashboard" class="btn btn-primary btn-lg btn-block">Dashboard</a>
+        </div>
+    {{/if}}
+
+
+
+
+</div>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}

@@ -1,0 +1,121 @@
+{{#partial "contenido"}}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo| Incidentes</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #007bff;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            color: #343a40; /* Color gris oscuro */
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            margin: 10px;
+            width: 300px; /* Ajusta el ancho según sea necesario */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-subtitle {
+            font-size: 1.1rem;
+            color: #28a745; /* Color verde */
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+            color: #343a40; /* Color gris oscuro */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>{{#if state}}Incidentes Abiertos{{else}}Incidentes Cerrados{{/if}} en la Comunidad {{community.name}}</h1>
+
+    {{#each incidents}}
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: right;">
+                    <p class="card-subtitle"> {{#if state}}
+                        Fecha de Apertura: {{openingDate.getDayOfMonth}}/{{openingDate.getMonth.getValue}}/{{openingDate.getYear}}
+
+                    {{else}}
+                        Fecha de Cierre:{{closingDate.getDayOfMonth}}/{{closingDate.getMonth.getValue}}/{{closingDate.getYear}}
+                    {{/if}}</p>
+                </div>
+                <div>
+                    <p class="card-title">Incidente N°{{id}}</p>
+                    <p class="card-subtitle {{#if open}}text-success{{else}}text-danger{{/if}}">
+                        {{#if open}}🟢 Abierto{{else}}🔴 Cerrado{{/if}}
+                    </p>
+                    <p class="card-title">{{associatedProvisionOfService.name}}</p>
+                    <p class="card-text">{{#if state}}Motivo: {{openingDescription}}{{else}}Detalle de cierre: {{closedDescription}}{{/if}}</p>
+                    {{#if open}}
+                        <p style="card-text"> Reportado Por: {{this.creator.person.name}}</p>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-danger" onclick="cerrarIncidente({{id}})">Cerrar Incidente</button>
+                        </div>
+                    {{else}}
+                        <p style="card-text"> Cerrado Por: {{this.closer.person.name}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<script>
+    function cerrarIncidente(incidentId) {
+        // Redirigir a la URL de cierre del incidente
+        window.location.href = '/incidents/close/' + incidentId;
+    }
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}

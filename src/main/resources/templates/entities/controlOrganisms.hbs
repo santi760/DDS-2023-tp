@@ -1,0 +1,26 @@
+<br><br><br>
+{{#partial "contenido"}}
+    <div>
+        <h2>Organismos de Control Cargados</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each Organism_control}}
+                <tr>
+                    <td>{{ name }}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center;">
+        <a class="btn btn-primary" href="/providerEntities/upload/providerEntities">Volver</a>
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseOrgControl}}

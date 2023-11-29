@@ -1,0 +1,74 @@
+{{#partial "contenido"}}
+    <style>
+
+        .delete-button {
+            width: 24px; /* Ancho de la imagen */
+            height: 24px; /* Altura de la imagen */
+            border: 0px;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+
+        .botones-confirmacion button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .botones-confirmacion button.confirmar {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .botones-confirmacion button.cancelar {
+            background-color: #f44336;
+            color: #fff;
+        }
+    </style>
+
+    <!-- Resto de tu contenido aquí -->
+
+    </style>
+    </style>
+    </style>
+    </style>
+
+    <div style="margin-top: 50px; ">
+        <h2>Provisiones de Servicio</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each prestaciones}}
+                <tr>
+                    <td>{{ this.name }}</td>
+                    <td>
+                        <form action="/deleteProvisionOfService/{{this.id}}" method="POST" style="text-align: right;">
+                            <button type="submit" style="border: none" onclick="return confirmSubmit()">
+                            <img src="/images/delete-button.jfif" class="delete-button" >
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function confirmSubmit() {
+            var confirmacion = window.confirm('¿Estás seguro de que deseas remover esta provision de servicio?');
+            return confirmacion;
+        }
+    </script>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseProvider}}

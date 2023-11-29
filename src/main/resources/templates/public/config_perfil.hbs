@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Archivo:wght@600&family=Chivo+Mono:wght@700&family=Delicious+Handrawn&family=Exo:wght@600&family=Poppins:wght@500&family=Sedgwick+Ave+Display&family=The+Nautigal:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo | Configuración de perfil</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap aquí -->
+</head>
+{{> templates/components/layout/LayoutBase }}
+
+<body>
+    <div class="col-md-10 ms-sm-auto col-lg-9 px-md-4">
+        <div class="container">
+            <h1 class="text-center mb-4">Configura tu perfil</h1>
+        </div>
+
+        <div class="card" style="width: 50rem; margin: 1rem;">
+            <div class="card-body">
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <b>Nombre</b>
+                    </div>
+                    <div style="flex-grow: 1; margin-left: 10px;">
+                        <input type="text" class="form-control" placeholder="{{nombre}}" id="nombreEstablecido">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <b>Apellido</b>
+                    </div>
+                    <div style="flex-grow: 1; margin-left: 10px;">
+                        <input type="text" class="form-control" placeholder="{{apellido}}" id="apellidoEstablecido">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <b>Email</b>
+                    </div>
+                    <div style="flex-grow: 1; margin-left: 31px;">
+                        <input type="email" class="form-control" placeholder="{{email}}" id="emailEstablecido">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <b>Teléfono</b>
+                    </div>
+                    <div style="flex-grow: 1; margin-left: 10px;">
+                        <input type="tel" class="form-control" placeholder="{{telefono}}" id="telefonoEstablecido">
+                    </div>
+                </div>
+
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label for="comunicacion"><b>Medio de comunicación</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="comunicacion" style="width: 450px;">
+                        <!-- Opciones del select para el Medio de notificacion -->
+                        <option value="{{medio}}" hidden>{{medio}}</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Email">Email</option>
+                    </select>
+
+                </div>
+
+                <br>
+                <br>
+
+
+                <label for="notifacion"><b>Momento de notificación</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="notifacion" style="width: 500px;">
+                        <!-- Opciones del select para el momento de notificacion -->
+                        <option value="{{momento}}" hidden>{{momento}}</option>
+                        <option value="En el momento">En el momento</option>
+                        <option value="Segun horarios">Segun horarios</option>
+                    </select>
+
+                    <div style="margin-left: 40px; width: 40%;"> <!-- Ajusta el margen y el ancho -->
+                        <a href="/configure/schedules" class="btn btn-primary btn-lg font-weight-bold"
+                            id="agregarHorarios">Agregar Horarios</a>
+                    </div>
+                </div>
+
+
+
+
+                <div style="display: flex; justify-content: center; margin-top: 30px;">
+                    <div style="text-align: center;">
+                        <a href="/confirmation" class="btn btn-primary btn-lg font-weight-bold" id="guardarCambios">Guardar
+                            cambios</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- ... (tu código HTML) ... -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var notificacionSelect = document.getElementById('notifacion');
+            var agregarHorariosBtn = document.getElementById('agregarHorarios');
+            var guardarCambiosBtn = document.getElementById('guardarCambios');
+
+            function toggleButtonState() {
+
+                // Si la opción seleccionada es "Segun horarios", habilita el botón, de lo contrario, deshabilítalo
+                agregarHorariosBtn.disabled = notificacionSelect.value !== "Segun horarios";
+
+            }
+
+            function guardarCambios() {
+                // Captura los valores de los inputs y selects
+                var nombre = document.getElementById('nombreEstablecido').value;
+                var apellido = document.getElementById('apellidoEstablecido').value;
+                var email = document.getElementById('emailEstablecido').value;
+                var telefono = document.getElementById('telefonoEstablecido').value;
+                var comunicacion = document.getElementById('comunicacion').value;
+                var notificacion = document.getElementById('notifacion').value;
+
+                // Crea un objeto con los datos
+                var data = {
+                    nombre: nombre,
+                    apellido: apellido,
+                    email: email,
+                    telefono: telefono,
+                    comunicacion: comunicacion,
+                    notificacion: notificacion
+                };
+
+                // Enviar los datos en formato JSON al servidor
+                fetch('/configure/profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        // Hacer algo con la respuesta del servidor si es necesario
+                        console.log(data);
+                    })
+                    .catch(function (error) {
+                        // Manejar errores aquí
+                        console.error(error);
+                    });
+
+
+            }
+
+            // Llama a la función inicialmente para establecer el estado del botón al cargar la página
+            toggleButtonState();
+
+            // Agrega un evento de entrada (input) al elemento <select>
+            notificacionSelect.addEventListener('change', toggleButtonState);
+
+            guardarCambiosBtn.addEventListener('click', guardarCambios);
+            agregarHorariosBtn.addEventListener('click', guardarCambios);
+
+        });
+    </script>
+
+</body>
+
+</html>

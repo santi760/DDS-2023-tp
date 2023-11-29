@@ -1,0 +1,25 @@
+<br><br><br>
+{{#partial "contenido"}}
+    <div>
+        <h2>Servicios Cargados</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each services}}
+                <tr>
+                    <td>{{ this.name }}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <br>
+
+{{/partial}}
+{{> templates/components/layout/LayoutBaseOrgControl}}

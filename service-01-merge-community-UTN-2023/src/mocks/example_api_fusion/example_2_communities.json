@@ -1,0 +1,130 @@
+{
+  "community1": {
+    "id": "101",
+    "name": "Comunidad 1",
+    "lastTimeMerged": "2022-03-15T12:00:00.000Z",
+    "degreeOfConfidence": 0.9,
+    "members": [
+      {
+        "id": "1",
+        "name": "Miembro 1"
+      },
+      {
+        "id": "2",
+        "name": "Miembro 2"
+      },
+      {
+        "id": "3",
+        "name": "Miembro 3"
+      },
+      {
+        "id": "4",
+        "name": "Miembro 4"
+      }
+    ],
+    "interestingServices": [
+      {
+        "id": "1",
+        "name": "Servicio 1"
+      },
+      {
+        "id": "2",
+        "name": "Servicio 2"
+      },
+      {
+        "id": "3",
+        "name": "Servicio 3"
+      },
+      {
+        "id": "4",
+        "name": "Servicio 4"
+      },
+      {
+        "id": "4",
+        "name": "Servicio 4"
+      }
+    ],
+    "interestingEstablishments": [
+      {
+        "id": "1",
+        "name": "Establecimiento 1"
+      },
+      {
+        "id": "2",
+        "name": "Establecimiento 2"
+      },
+      {
+        "id": "3",
+        "name": "Establecimiento 3"
+      },
+      {
+        "id": "4",
+        "name": "Establecimiento 4"
+      }
+    ]
+  },
+  "community2": {
+    "id": "102",
+    "name": "Comunidad 2",
+    "lastTimeMerged": "2022-03-15T12:00:00.000Z",
+    "degreeOfConfidence": 0.9,
+    "members": [
+      {
+        "id": "1",
+        "name": "Miembro 1"
+      },
+      {
+        "id": "2",
+        "name": "Miembro 2"
+      },
+      {
+        "id": "3",
+        "name": "Miembro 3"
+      },
+      {
+        "id": "5",
+        "name": "Miembro 5"
+      }
+    ],
+    "interestingServices": [
+      {
+        "id": "1",
+        "name": "Servicio 1"
+      },
+      {
+        "id": "2",
+        "name": "Servicio 2"
+      },
+      {
+        "id": "3",
+        "name": "Servicio 3"
+      },
+      {
+        "id": "4",
+        "name": "Servicio 4"
+      },
+      {
+        "id": "5",
+        "name": "Servicio 5"
+      }
+    ],
+    "interestingEstablishments": [
+      {
+        "id": "1",
+        "name": "Establecimiento 1"
+      },
+      {
+        "id": "2",
+        "name": "Establecimiento 2"
+      },
+      {
+        "id": "3",
+        "name": "Establecimiento 3"
+      },
+      {
+        "id": "5",
+        "name": "Establecimiento 5"
+      }
+    ]
+  }
+}

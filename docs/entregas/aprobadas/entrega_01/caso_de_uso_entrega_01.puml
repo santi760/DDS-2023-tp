@@ -1,0 +1,19 @@
+@startuml
+
+
+
+Usuario --> (Registrarse a Comunidad)
+Usuario --> (Registarse en la Plataforma)
+
+UsuarioAdminComunidad --> (Alta,Baja,Modificacion Transportes)
+UsuarioAdminComunidad --> (Alta,Baja,Modificacion Estaciones)
+
+
+ProveedorPlataforma --> (Alta,Baja,Modificacion Comunidades)
+ProveedorPlataforma --> (Validar y Crear Admin de las Comunidades)
+ProveedorPlataforma --> (Alta,Baja,Modificacion Transportes)
+ProveedorPlataforma --> (Alta,Baja,Modificacion Estaciones)
+
+
+
+@enduml

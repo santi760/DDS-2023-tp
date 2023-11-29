@@ -1,0 +1,48 @@
+@startuml
+Community--> CustomProximityFinder
+CustomProximityFinder -->"*" ProximityFinder
+
+class CustomProximityFinder{
+    -List<ProximityFinder> proximityFinders
+
+    +aplicateProximityFinders(Member,incident)
+}
+
+
+
+interface ProximityFinder {
+  + Boolean memberIsCloser(Members member,Incident incidente>)
+}
+
+
+
+class ProvinceSearcher implements ProximityFinder{
+
+}
+
+class MunicipalitySearcher implements ProximityFinder{
+
+}
+
+class DepartmentSearcher implements ProximityFinder{
+
+}
+
+class LocalitySearcher implements ProximityFinder{
+
+}
+
+@enduml
+
+
+NOTAS:
+
+para sacar la logica repetida, aplicamos lo mismo que en los validadores
+de contraseñas
+
+ahora una comunidad conoce a su CUSTOM PROXIMITY FINDER
+entonces lo configura con filtros de busqueda dependiendo como la comunidad quiera avisar a sus miembros
+
+se aplican los criterios de busqueda de la misma manera que en las validaciones de contra.
+
+

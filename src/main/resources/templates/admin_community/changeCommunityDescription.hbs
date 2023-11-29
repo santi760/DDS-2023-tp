@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Archivo:wght@600&family=Chivo+Mono:wght@700&family=Delicious+Handrawn&family=Exo:wght@600&family=Poppins:wght@500&family=Sedgwick+Ave+Display&family=The+Nautigal:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de perfil</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap aquí -->
+</head>
+
+<body>
+<div class="container d-flex flex-column align-items-center">
+    <div class="container">
+        <h1 class="text-center mb-4">CAMBIO DE DESCRIPCIÓN</h1>
+    </div>
+    <div class="card" style="width: 50rem; margin: 1rem;">
+        <div class="card-body" style="align-content: center;
+        justify-content: center;
+        margin: 0;
+        display: grid;">
+
+            <label for="Descripcion"><b>Descripción de la Comunidad</b></label>
+            <div style="display: flex; align-items: center;">
+                <input type="text" class="form-control form-control-lg" id="Descripcion" placeholder="Ingrese nueva descripción" style="width: 450px;">
+            </div>
+
+            <div style="display: flex; justify-content: center; margin-top: 30px;">
+                <div style="text-align: center;">
+                    <a href="/dashboard" class="btn btn-primary btn-lg font-weight-bold" id="guardarCambiosBtn">Guardar cambios</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById("guardarCambiosBtn").addEventListener("click", function () {
+        // Obtén el valor ingresado en el campo de texto
+        const nuevoNombre = document.getElementById("Descripcion").value;
+
+        // Crea un objeto JSON con el nombre para enviar al backend
+        const data = {
+            nuevaDescripcion: nuevaDescripcion
+        };
+
+        // Realiza la solicitud POST al backend utilizando Fetch
+        fetch("changeCommunityDescription", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+                .then(response => response.json())
+                .then(result => {
+                    // Maneja la respuesta del servidor si es necesario
+                    console.log(result);
+                })
+                .catch(error => {
+                    // Maneja los errores de la solicitud
+                    console.error(error);
+                });
+    });
+</script>
+
+</body>
+</html>

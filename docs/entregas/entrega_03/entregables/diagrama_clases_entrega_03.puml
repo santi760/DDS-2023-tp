@@ -1,0 +1,302 @@
+
+
+@startuml
+/'
+COMENTARIO MULTILINE
+'/
+!include rankings.puml
+!include notificaciones_canal_y_momento.puml
+!include Proximity_finder.puml
+
+
+
+ProvisionOfService --> Service
+ProvisionOfService --> Establishment
+ProvisionOfService --> Entity
+
+Establishment --> TypeEstabLishment
+
+Community -->"*" Service
+CommunityMember "*"<-- Community
+CommunityMember -->"*" Entity
+CommunityMember -->  User
+CommunityMember -->"*" Service
+CommunityMember -up->"*"  TemporaryRoleToService
+
+
+TemporaryRoleToService -up-> RolTemporal
+
+Entity --> TypeEntityContainer :x
+Entity --> "*" Establishment
+
+ProviderEntity -->"*" Entity
+ProviderEntity  --> User
+
+ControlOrganism  -->  User
+ControlOrganism -->"*" ProviderEntity
+ControlOrganism -->"*" Service
+
+TypeEntityContainer -down-> TypeEntity
+TypeEntityContainer -down-> typePublicTransport
+
+
+Community -->"*" Incident
+
+Incident --> ProvisionOfService
+Incident --> CommunityMember
+
+
+
+
+
+
+
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+
+
+enum RolTemporal {
+    AFFECTED,OBSERVER
+}
+
+
+
+class TemporaryRoleToService {
+    -Service service;
+    -Rol TempRol
+}
+
+
+
+class CommunityMember {
+
+    - User user;
+    - String name
+    - String surname
+    - String email
+
+    - Set<Service> interestingServices
+    - Set<Entity> interestingEntities
+
+    - Province province
+    - Department departament
+    - Municipality municipality
+    - aLocality locality
+
+    -List<TemporaryRoleToService> temporaryRoles
+    -List<Integer> MomentsNotificate
+
+
+    + void addInterestingService(Service... services)
+    + void addInterestingEntity(Entity... entities)
+    + void notificate(NotificationMessage notification)
+
+}
+
+
+
+class Community {
+    - String name
+    - Set<Service> interestingServices
+    - Set<CommunityMember> CommunityMembers
+    - Set<Incident> Openincidents
+    - Set<Incident> Closedincidents
+    -CustomProximityFinder customProximityFinder
+
+
+    + void addCommunityMember(CommunityMember member)
+    + void addInterestingService(Service service)
+
+    + void addIncidentAndNotifyUsers(Incident newIncident)
+    + closeIncidentAndNotifyMembers(Incident incident, CommunityMember closerMember, String closeObservation)
+
+    + void suggestIncidentReviewToCloseMember()
+
+}
+
+
+
+
+class Service {
+  - String name;
+
+  +getIncidentsOfService() todo
+}
+
+/'
+TODO cuando se agrega un incidente y el usuario tiene muchas organizaciones, se agrega el incidente a todas las organizaciones. profundizar , esta en la grabacion de la clase
+'/
+class ProvisionOfService{
+    - Service Service;
+    - Establishment establishment;
+    - Entity entity;
+
+
+     +void getIncidentsOfProvision() todo
+}
+
+
+
+
+
+
+
+
+class Establishment {
+    - String name;
+    - Location location
+    - TypeEstabLishment typeEstablishment
+
+    - Province province
+    - Department departament
+    - Municipality municipality
+    - aLocality locality
+
+    +List<Incident> getIncidentsOfEstablishment()
+}
+
+
+
+class Entity {
+    - String name;
+    - Type typeEntity
+    - Set<Establishment> establishments;
+    - Integer AverageOfIncidentsPerWeek;
+
+    + void addEstablishment()
+    + Establishment getFirstEstablishment()
+    + Establishment getLastEstablishment()
+
+    + List<Incident> getIncidentsOfEntity()
+    + List<Incident> incidentsFromThisWeek()
+    + int averageIncidentClosingTimePerWeek()
+}
+
+
+class TypeEntityContainer {
+    -TypeEntity typeEntity
+    -TypePublicTransport typePublicTransport
+}
+
+enum TypeEntity {
+    PUBLIC_TRANSPORT,
+    ORGANIZATION;
+}
+enum typePublicTransport{
+    RAILWAY
+    SUBWAY
+}
+
+enum TypeEstabLishment {
+    STATION,
+    SUCURSAL;
+}
+
+
+class ControlOrganism {
+    -User user;
+    -String name;
+    -Set<ProviderEntity> providerEnties
+
+    +void addProviderEntity(ProviderEntity)
+    +Report getLastReportFromProviderEntity(ProviderEntity providerEntity)
+    +Report gestReportFrom(ProviderEntity,date)
+}
+
+
+class ProviderEntity {
+    -User user;
+    -String name;
+    -Set<Entity> entities
+    -List<Report> historicReports
+    -Report weeklyReport;
+
+    +addEntity(Entity)
+    +void addReportToRecord(Report report)
+}
+
+
+
+class User {
+    # String user;
+    # String password;
+    # NotificationChannel notificationChannel;
+    # NotificationSchedule notificationSchedule;
+}
+
+
+class Incident {
+    -CommunityMember creator;
+    -CommunityMember closer;
+    -LocalDateTime openingDate;
+    -LocalDateTime closingDate;
+    -String openingDescription;
+    -String closedDescription;
+    -ProvisionOfService provisionOfServiceAssociated;
+    -Boolean open;
+
+    + void close(CommunityMember closer, String closedDescription)
+    + calculateDuration(LocalDateTime openingDate, LocalDateTime closingDate)
+
+    + Municipality getMunicipality()
+    + Department getDepartment()
+    + Province getProvince()
+    + Locality getLocality()
+
+    + long getHoursDifferenceOpenClose()
+    + long getDaysDifferenceOpenClose()
+    + long getWeeksDifferenceOpenClose()
+
+    + Boolean isWithin24Hours(LocalDateTime startDate)
+    + Boolean isFromThisWeek()
+}
+
+
+
+
+
+
+class PasswordValidator {
+    -List<Validator> validators
+    +List<String> validate(user)
+}
+
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}
+
+@enduml
+-------------------------------------------------------------------------
+
+posicionar elementos arriba abajo izq derecha
+https://www.plantuml.com/plantuml/uml/SoWkIImgAStDuKhBprVGpKbDAz6rKqWfpSsjz06o8Q95cUaPSE4W40SYNbe04mmjW8Yav9VdmSHSW6mkXzIy593f0000
+
+
+class Passwor10000Validation implements ValidationType {
+}
+class PasswordLengthValidation implements ValidationType {
+}
+class PasswordUsernameValidation implements ValidationType {
+}
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+class PasswordValidator {
+    +List<String> validate(user)
+}
+
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}

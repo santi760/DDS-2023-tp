@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tus metaetiquetas y enlaces de estilo aquí -->
+
+    <style>
+        body {
+            padding-top: 56px; /* Ajusta según la altura de tu navbar */
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding-top: 60px; /* Ajusta según la altura de tu navbar en pantallas más grandes */
+            }
+        }
+
+        /* Agrega tus estilos adicionales según sea necesario */
+    </style>
+
+    <!-- Tus demás enlaces de estilo y scripts aquí -->
+</head>
+<body>
+{{> templates/components/layout/navbar/index }}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            {{> templates/components/layout/sidebar/Sidebar }}
+        </div>
+        <div class="col-md-8">
+            {{#block "contenido"}}
+            {{/block}}
+        </div>
+    </div>
+</div>
+
+<!-- Tus scripts y cierre de etiquetas aquí -->
+</body>
+</html>

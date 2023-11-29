@@ -1,0 +1,126 @@
+@startuml
+
+User -> NotificationChannel
+User -> NotificationSchedule
+CommunityMember ..> NotificationMessage
+
+CronTaskNotificate -left> QueueToNotificate
+
+DefinedMoments --> QueueToNotificate
+
+
+
+
+class RightNow implements NotificationSchedule{
+    +void sendNotificationIfScheduleMatches(CommunityMember)
+    +checkNotificationMoment()
+}
+
+
+class CronTaskNotificate {
+    -timer
+    -delay
+    -timeInMillisecondsUntilNextActivation
+
+    +start()
+    +cancel()
+    +verificateNotification()
+}
+
+
+class QueueToNotificate {
+    -List<CommunityMember> communityMembers
+    +void sendMessageIfScheduleMatches()
+}
+
+class DefinedMoments implements NotificationSchedule{
+    -CommunityMember member
+    -List<NotificationMessage> unreportedNotifications
+
+    +void checkNotificationMoment()
+    +void sendNotificationIfScheduleMatches(CommunityMember member)
+}
+
+
+class AdapterTwilioWhatsApp implements AdapterWhatSappSender {
+
+    -String ACCOUNT_SID
+    -AUTH_TOKEN
+    +void notificate(NotificationMessage notification , CommunityMember member)
+
+}
+
+WhatsappSender --> AdapterWhatSappSender
+
+interface AdapterWhatSappSender {
+    void notificateWhatsapp(NotificationMessage notification , CommunityMember member)
+}
+
+class WhatsappSender implements NotificationChannel {
+    AdapterWhatSappSender adapter
+
+    void notificateWhatsapp(NotificationMessage notification , CommunityMember member)
+
+}
+
+
+class AdapterJakartaEmail implements AdapterEmailSender {
+     -Properties properties
+     -Session session
+     +notificate(NotificationMessage notification , CommunityMember member)
+}
+
+EmailSender --> AdapterEmailSender
+
+
+interface AdapterEmailSender {
+    notificateEmail(NotificationMessage notification , CommunityMember member)
+}
+
+class EmailSender implements NotificationChannel {
+    AdapterEmailSender adapter
+    notificateEmail(NotificationMessage notification , CommunityMember member)
+}
+
+
+interface NotificationChannel {
+   +send_notification(NotificationMessage,ComunityMember)
+  }
+
+
+interface NotificationSchedule {
+    +void void sendNotificationIfScheduleMatches(NotificationMessage notification, CommunityMember member);
+    +void checkNotificationMoment()
+}
+
+
+class NotificationMessage {
+    -String title
+    -String Body
+    -Incident incident
+
+    +NotificationMessage resume(List<NotificationMessage> notificationMessages)
+}
+
+
+class CommunityMember {
+    -List<int> MomentsNotificate
+
+    +notificate(NotificationMessage)
+}
+
+
+
+@enduml
+
+1) un evento quiere notificar algo al miembro
+2) Horario notificacion verifica cuando lo envio
+
+DEPENDIENDO DE HORARIONOTIFIACION
+3.0) si es SINAPUROS, hago NotificationChannel.Enviar (lo enviamos a penas nos enteramos)
+3.1)  si es HorariosDefinidos , agrego a la clase ColaMensajesANotificar con el miembro y su proximo horario a notificar.
+    antes de notificarlo, se genera el resumen de incidentes , despues se notifica y se lo elimina de la cola de mensajes a notificar
+
+4) la cola de mensajes a notificar la activa un CRONTASK cada x tiempo definido por nosotros.:
+
+

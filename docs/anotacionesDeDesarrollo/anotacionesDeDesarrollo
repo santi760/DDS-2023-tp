@@ -1,0 +1,4 @@
+ //! evivar los new en el codigo si lo tenemos en varias partes para instanciar objetos.
+  Builder para chekeo extra para ver si la notificacion tiene algo vacio.
+
+  (usar builders para la construccion de objetos)

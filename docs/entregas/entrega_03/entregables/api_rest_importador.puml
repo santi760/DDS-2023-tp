@@ -1,0 +1,128 @@
+@startuml
+ListadoDeProvincias -->"*" Provincia
+ListadoDeDepartamentos -->"*" Departamento
+ListadoDeMunicipios -->"*" Municipio
+
+ServicioGeoref --> ListadoDeDepartamentos
+ServicioGeoref --> ListadoDeProvincias
+ServicioGeoref --> ListadoDeMunicipios
+
+Municipio --> Centroide
+Provincia --> Centroide
+Departamento --> Centroide
+
+Importer ..|> ServicioGeoref
+ServicioGeoref ..|> GeorefService
+
+Importer --> Province
+
+Importer --> Location
+Importer --> Department
+Importer --> Municipality
+Province --> Coordinate
+Location --> Coordinate
+Municipality --> Coordinate
+Department --> Coordinate
+
+interface GeorefService {
+    +ListadoDeProvincias provincias
+    +ListadoDeMunicipios municipios
+    +ListadoDeDepartamentos departamentos
+}
+
+class Centroide {
+    + double lat;
+    + double lon;
+
+}
+
+class Provincia{
+    + int id
+    + String name
+    + Centroide centroide
+}
+
+class Municipio{
+    + int id
+    + String name
+    + Centroide centroide
+}
+
+class Departamento{
+    + int id
+    + String name
+    + Centroide centroide
+}
+
+class Importer{
+
+
+    + List<Provincia> provinciesImporter()
+    + List<Departamento> departmentsImporter()
+    + List<Localidad> locationsImporter()
+    + List<Municipio> municipalitiesImporter()
+    + List<Province> provinciesSetter(List<Provincia>)
+    + List<Department> departmentsSetter(List<Departamento>)
+    + List<Location> locationsSetter(List<Localidad>)
+    + List<Municipality> municipalitiesSetter(List<Province>)
+}
+
+class Coordinate {
+    + double latitude;
+    + double longitude;
+
+}
+
+class Province{
+    + int id
+    + String name
+    + Coordinate coordinate
+}
+
+class Municipality{
+    + int id
+    + String name
+    + Coordinate coordinate
+}
+
+class Department{
+    + int id
+    + String name
+    + Coordinate coordinate
+}
+
+class Location{
+    + int id
+    + String name
+    + Coordinate coordinate
+}
+
+class ListadoDeProvincias{
+    + int cantidad
+    + int total
+    + int inicio
+    + List<Provincia> provincias
+}
+
+class ListadoDeMunicipios{
+    + int cantidad
+    + int total
+    + int inicio
+    + List<Municipio> municipios
+}
+
+class ListadoDeDepartamentos{
+    + int cantidad
+    + int total
+    + int inicio
+    + List<Departamento> departamentos
+}
+
+class ServicioGeoref{
+    +ListadoDeProvincias provincias
+    +ListadoDeMunicipios municipios
+    +ListadoDeDepartamentos departamentos
+}
+
+
+@enduml

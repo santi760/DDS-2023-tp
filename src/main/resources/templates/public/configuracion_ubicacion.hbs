@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Archivo:wght@600&family=Chivo+Mono:wght@700&family=Delicious+Handrawn&family=Exo:wght@600&family=Poppins:wght@500&family=Sedgwick+Ave+Display&family=The+Nautigal:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo | Configuración de perfil</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap aquí -->
+</head>
+{{> templates/components/layout/LayoutBase }}
+
+<body>
+    <div class="col-md-10 ms-sm-auto col-lg-9 px-md-4">
+        <div class="container">
+            <h1 class="text-center mb-4">Configura tu ubicación</h1>
+        </div>
+        <div class="card" style="width: 50rem; margin: 1rem;">
+            <div class="card-body" style="align-content: center;
+    justify-content: center;
+    margin: 0;
+    display: grid;">
+
+                <label for="Provincia"><b>Provincia</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="Provincia" style="width: 450px;">
+                        <!-- Opciones del select para el Medio de notificacion -->
+                        <option value="" hidden>{{provinciaEstablecido}}</option>
+                        {{#each pronvicias}}
+                        <option value="{{this.name}}"> {{this.name}} </option>
+                        {{/each}}
+                    </select>
+
+                </div>
+
+                <br>
+                <br>
+
+                <label for="Municipio"><b>Municipio</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="Municipio" style="width: 450px;">
+                        <!-- Opciones del select para el Medio de notificacion -->
+                        <option value="" hidden>{{municipalidadEstablecido}}</option>
+                        {{#each municipalidades}}
+                        <option value="{{this.name}}"> {{this.name}} </option>
+                        {{/each}}
+                    </select>
+
+                </div>
+
+                <br>
+                <br>
+
+                <label for="Departamento"><b>Departamento</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="Departamento" style="width: 450px;">
+                        <!-- Opciones del select para el Medio de notificacion -->
+                        <option value="" hidden>{{departamentoEstablecido}}</option>
+                        {{#each departamentos}}
+                        <option value="{{this.name}}"> {{this.name}} </option>
+                        {{/each}}
+                    </select>
+
+                </div>
+
+                <br>
+                <br>
+
+                <label for="Localidad"><b>Localidad</b></label>
+                <div style="display: flex; align-items: center;">
+                    <select class="form-control form-control-lg custom-select" id="Localidad" style="width: 450px;">
+                        <!-- Opciones del select para el Medio de notificacion -->
+                        <option value="" hidden>{{localidadEstablecido}}</option>
+                        {{#each localidades}}
+                        <option value="{{this.name}}"> {{this.name}} </option>
+                        {{/each}}
+                    </select>
+
+                </div>
+
+                <br>
+                <br>
+
+                <div style="display: flex; justify-content: center; margin-top: 30px;">
+                    <div style="text-align: center;">
+                        <a href="/confirmation" class="btn btn-primary btn-lg font-weight-bold"
+                            id="guardarCambiosBtn">Guardar cambios</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Agrega tus enlaces a los archivos JS de Bootstrap y tus propios scripts aquí -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var guardarCambiosBtn = document.getElementById('guardarCambiosBtn');
+
+            guardarCambiosBtn.addEventListener('click', function (event) {
+
+
+                var provincia = document.getElementById('Provincia').value;
+                var municipio = document.getElementById('Municipio').value;
+                var departamento = document.getElementById('Departamento').value;
+                var localidad = document.getElementById('Localidad').value;
+
+                var data = {
+                    provincia: provincia,
+                    municipio: municipio,
+                    departamento: departamento,
+                    localidad: localidad
+                };
+
+                // Enviar los datos en formato JSON al servidor
+                fetch('/configure/user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        // Hacer algo con la respuesta del servidor si es necesario
+                        console.log(data);
+                    })
+                    .catch(function (error) {
+                        // Manejar errores aquí
+                        console.error(error);
+                    });
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

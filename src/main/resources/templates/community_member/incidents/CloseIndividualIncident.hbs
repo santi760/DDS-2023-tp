@@ -1,0 +1,130 @@
+{{#partial "contenido"}}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo | Cierre de Incidente</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 2rem;
+            text-align: center; /* Centro el texto en el cuerpo de la tarjeta */
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem; /* Reduzco el espacio entre párrafos */
+        }
+
+        textarea {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            width: 100%;
+            max-width: 25rem;
+            margin: 1rem 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-title">
+                Cerrar incidente N° {{incidentToClose.id}}
+            </p>
+            <p class="card-text">
+                En:{{incidentToClose.associatedProvisionOfService.name}}
+            </p>
+            <p class="card-text">
+                Se reportó: {{incidentToClose.openingDescription}}
+            </p>
+            <p class="card-text">
+                Ingrese una descripción para el cierre del incidente
+            </p>
+            <form action="" method="POST" id="incidentForm">
+            <textarea required class="form-control" name="textTareaCierreIncidente" rows="5"
+              placeholder="Registra un nuevo incidente en tus comunidades. Completa los detalles necesarios, como ubicación, descripción del incidente y cualquier información relevante. Ayúdanos a mejorar la accesibilidad y la calidad de los servicios en tu ciudad."></textarea>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
+                    Cerrar incidente
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Modal -->
+<<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Cierre de Incidente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas cerrar este incidente?
+            </div>
+            <div class="modal-footer" style="text-align: center;"> <!-- Centro los botones -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 10px;">Cancelar</button>
+                <button type="submit" class="btn btn-success" onclick="submitForm()" style="background-color: #28a745; border-color: #28a745;">
+                    Cerrar incidente
+                    <img src="/images/okay.png" alt="Okay" style="width: 16px; height: 16px; margin-left: 5px;">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        document.getElementById("incidentForm").submit();
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}

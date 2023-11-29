@@ -1,0 +1,37 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Archivo:wght@600&family=Chivo+Mono:wght@700&family=Delicious+Handrawn&family=Exo:wght@600&family=Poppins:wght@500&family=Sedgwick+Ave+Display&family=The+Nautigal:wght@700&display=swap"
+    rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+<!DOCTYPE html>
+<html lang="es">
+
+<div>
+    <h2>Entidades prestadoras de {{ controlOrganism.name }}</h2>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each providerEntities}}
+            <tr>
+                <td>{{ this.name }}</td>
+                <td>
+                    <a class="btn btn-primary" href="/report/{{this.id}}">Ver Reporte</a>
+                    <a class="btn btn-primary" href="/providerEntity/{{this.id}}">Eliminar</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+</html>

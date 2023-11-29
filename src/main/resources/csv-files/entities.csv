@@ -1,0 +1,4 @@
+nombre,descripcion,tipo(ORGANIZATION/PUBLIC_TRANSPORT),TIPO TRANSPORTE(SUBWAY/RAILWAY) <- Esta primera linea no va
+JUMBO,En Jumbo tenemos todo lo que necesitas,ORGANIZATION
+SUBTE B,Subte B,PUBLIC_TRANSPORT,SUBWAY
+TREN MITRE, Trenes Argetinos,PUBLIC_TRANSPORT,RAILWAY

@@ -1,0 +1,327 @@
+@startuml
+
+''-------------------- DEFINICION DE  RELACIONES -------------------''
+
+''  UNO A MUCHOS : uno ||--o{ muchos           ''
+
+'' MUCHOS A UNO : muchos }o--|| uno             ''
+
+'' UNO A UNO : uno }o--|| uno                   ''
+
+'' MUCHOS A MUCHOS : ROMPEMOS!! NOS QUEDA : '' MUCHOS A UNO : muchos }o--|| uno  Y '' UNO A MUCHOS : uno ||--o{ muchos
+'' siendo ese UNO la tabla intermedia. ej: JugadorXPartido
+
+
+
+
+''-------------------- ENTIDADES -------------------''
+
+
+
+entity "temporary_role_to_service" as temporary_role_to_service {
+     * id  INTEGER(11) <<PK>>
+     * service_id  INTEGER(11) <<FK>>
+     --
+     * temporaryRole VARCHAR(255)
+}
+
+entity "community_member" as community_member {
+    *id : INTEGER(11) <<PK>>
+    * user_id : INTEGER(11) <<FK>>
+    * province_id INTEGER(11) <<FK>>
+    * department_id INTEGER(11) <<FK>>
+    * municipality_id INTEGER(11) <<FK>>
+    * locality_id INTEGER(11) <<FK>>
+    --
+    * name VARCHAR(255)
+    * surname VARCHAR(255)
+    * email VARCHAR(255)
+    * phone_number VARCHAR(255)
+}
+
+entity "community" as community {
+    *id INTEGER(11) <<PK>>
+    --
+    * name VARCHAR(255)
+}
+
+
+entity "service" as service {
+    * id INTEGER(11) <<PK>>
+    --
+    * name VARCHAR(255)
+}
+
+
+entity "provision_of_service" as provision_of_service {
+    * id : INTEGER(11) <<PK>>
+    * service_id : INTEGER(11) <<FK>>
+    * establishment_id : INTEGER(11) <<FK>>
+    --
+    * name VARCHAR(255)
+}
+
+entity "password_validator" as password_validator {
+    * id : INTEGER(11) <<PK>>
+}
+
+entity "establishment" as establishment {
+    * id : INTEGER(11) <<PK>>
+    * province_id INTEGER <<FK>>
+    * department_id INTEGER <<FK>>
+    * municipality_id INTEGER <<FK>>
+    * locality_id INTEGER <<FK>>
+    * entity_id INTEGER <<FK>>
+    --
+    * name VARCHAR(255)
+    * type_establishment varchar(255)
+}
+
+
+entity "entity" as entity {
+    * id INTEGER(11) <<PK>>
+    * provider_entity_id INTEGER(11) <<FK>>
+    --
+    * name VARCHAR(255)
+    * type VARCHAR(255)
+    * type_public_transport varchar(255)
+}
+
+
+entity "control_organism" as control_organism {
+    * id : INTEGER(11) <<PK>>
+    * user_id : INTEGER(11) <<FK>>
+    --
+    * name : VARCHAR(255)
+}
+
+
+entity "provider_entity" as provider_entity {
+    * id : INTEGER(11) <<PK>>
+    * user_id : INTEGER(11) <<FK>>
+    * control_organism_id : INTEGER(11) <<FK>>
+    --
+    * name VARCHAR(255)
+}
+
+
+entity "user" as user {
+    *id INTEGER(11) <<PK>>
+    --
+    *  name VARCHAR(255)
+    *  password VARCHAR(255)
+    * last_login_attempt DATETIME
+    * notification_channel VARCHAR(255)
+    * notification_schedule VARCHAR(255)
+}
+
+
+
+
+entity "incident" as incident {
+     *id INTEGER(11) <<PK>>
+     *associated_provision_of_service_id INTEGER(10) <<FK>>
+     *community_member_creator_id INTEGER(10) <<FK>>
+     *community_member_closer_id INTEGER(10) <<FK>>
+     *community_id INTEGER(10) <<FK>>
+     --
+     *creator_id INTEGER(11)
+     *closer_id INTEGER(11)
+     *opening_date DATETIME
+     *closing_date DATETIME
+     *opening_description LONGTEXT
+     *closed_description LONGTEXT
+     *open BOOLEAN
+}
+
+entity "notification_message" as notification_message {
+  * id INTEGER(11) <<PK>>
+  * incident_id INTEGER(11) <<FK>>
+  --
+  * title TEXT
+  * body TEXT
+  * message_of_summarizing LONGTEXT
+  * sended BOOLEAN
+  * time_sended DATETIME
+  * time_should_be_sended DATETIME
+}
+
+entity "province" as province {
+    * province_id INTEGER(11) <<PK>>
+    --
+    * name VARCHAR(255)
+    * latitude double
+    * longitude double
+    * id_province int
+}
+
+entity "departament" as departament {
+    * departament_id INTEGER(11) <<PK>>
+    --
+    * name VARCHAR(255)
+    * latitude double
+    * longitude double
+    * id int
+}
+
+entity "municipality" as municipality {
+    * municipality_id INTEGER(11) <<PK>>
+    --
+    * name VARCHAR(255)
+    * latitude double
+    * longitude double
+    * id int
+}
+
+entity "locality" as locality {
+    * locality_id INTEGER(11) <<PK>>
+   --
+    * name VARCHAR(255)
+    * latitude double
+    * longitude double
+    * id VARCHAR(255)
+}
+
+
+
+
+
+''-------------------- ROMPIENDO EL MUCHOS A MUCHOS -------------------''
+
+entity "community_member_x_community" as community_member_x_community {
+    * id_community_member : INTEGER(11) <<PK,FK>>
+    * id_community : INTEGER(11) <<PK,FK>>
+    --
+}
+
+entity "interesting_servicie" as interesting_servicie {
+    * id_service : INTEGER(11) <<PK,FK>>
+    * id_community_member: INTEGER(11) <<PK,FK>>
+    --
+}
+
+
+entity "community_x_service" as community_x_service {
+    * id_community : INTEGER(11) <<PK,FK>>
+    * id_service : INTEGER(11) <<PK,FK>>
+    --
+}
+
+
+
+entity "interest_entity_x_community_member" as interest_entity_x_community_member {
+    * id_community_member : INTEGER(11) <<PK,FK>>
+    * id_entity : INTEGER(11) <<PK,FK>>
+    --
+}
+
+
+entity "moments_notificate" as moments_notificate {
+    * id INTEGER(11) <<PK>>
+    * community_member_id INTEGER(11) <<FK>>
+    --
+    * moments_notificate int
+}
+
+
+entity "temporal_rol_x_community_member" as temporal_rol_x_community_member {
+        * community_member_id : INTEGER(11) <<PK,FK>>
+        * Temporal_rol_id : INTEGER(11) <<PK,FK>>
+        --
+}
+
+
+
+
+''-------------------- RELACIONES DE ENTIDADES -------------------''
+
+
+
+
+'' --------moments_notificate --------''
+community_member ||--o{ moments_notificate
+
+'' --------Locations --------''
+
+'' --------community_member --------''
+
+
+community_member ||--|| user
+
+province  ||--o{ community_member
+municipality  ||--o{ community_member
+locality  ||--o{ community_member
+departament  ||--o{ community_member
+
+community_member  ||--o{ temporal_rol_x_community_member
+temporal_rol_x_community_member }o--|| temporary_role_to_service
+temporary_role_to_service ||--|| service
+
+community_member ||--o{ community_member_x_community
+community ||--o{ community_member_x_community
+
+community_member ||--o{ interesting_servicie
+service ||--o{ interesting_servicie
+
+
+community_member ||--o{ interest_entity_x_community_member
+entity ||--o{ interest_entity_x_community_member
+
+
+community_member ||--o| incident
+community_member ||--o| incident
+
+
+'' --------community --------''
+
+community ||--o{ incident
+community ||--o{ incident
+
+community ||--o{ community_x_service
+service ||--o{ community_x_service
+
+
+'' -------- incident --------''
+
+provision_of_service ||--o{ incident
+
+
+'' -------- service --------''
+
+
+
+'' -------- provision_of_service  --------''
+
+ provision_of_service }|--|| service
+ provision_of_service }|--|| establishment
+
+
+
+'' -------- establishment  --------''
+
+
+province  ||--o{ establishment
+municipality  ||--o{ establishment
+locality  ||--o{ establishment
+departament  ||--o{ establishment
+
+'' -------- entity  --------''
+
+entity  ||--o{ establishment
+
+
+'' -------- notification_message  --------''
+    
+notification_message }|--|| incident
+
+
+'' -------- provider_entity  --------''
+
+
+provider_entity  ||--|| user
+provider_entity ||--o{ entity
+control_organism  ||--o{ provider_entity
+control_organism  ||--|| user
+
+
+@enduml

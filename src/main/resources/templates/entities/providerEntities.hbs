@@ -1,0 +1,53 @@
+{{#partial "contenido"}}
+    <style>
+    .button-container {
+    text-align: right; /* Alinea el contenido a la derecha dentro del contenedor */
+    }
+    .delete-button {
+        width: 24px; /* Ancho de la imagen */
+        height: 24px; /* Altura de la imagen */
+        border: 0px;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+    <div style="margin-top: 50px;">
+    <h2>Entidades prestadoras de {{ controlOrganism.name }}</h2>
+</div>
+<div class="table-responsive" >
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each providerEntities}}
+            <tr>
+                <td>{{ this.name }}</td>
+                <td>
+                    <div style="display: flex; flex-direction: row; justify-content: end; gap: 12px; align-items: center">
+                        <a class="btn btn-primary" href="/report/{{this.id}}" target="_blank" >Ver Reporte</a>
+                        <a class="btn btn-primary" href="/controlOrganism/providerEntity/{{this.id}}/entities" >Ver Entidades</a>
+                        <form action="/deleteProviderEntity/{{this.id}}" method="POST">
+                            <button type="submit" style="border: none" onclick="return confirmSubmit()">
+                                <img src="/images/delete-button.jfif" class="delete-button">
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
+    <script>
+        function confirmSubmit() {
+            var confirmacion = window.confirm('¿Estás seguro de que deseas remover esta endidad prestadora?');
+            return confirmacion;
+        }
+    </script>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseOrgControl}}

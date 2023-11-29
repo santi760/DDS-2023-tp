@@ -1,0 +1,51 @@
+{{#partial "contenido"}}
+   <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | {{community.name}}</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ <head>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8" style="margin: 1rem;">
+      <div class="card">
+        <div class="card-body">
+          <p style="font-weight: bold; font-size: 1.5rem;">
+            Reportar incidente en: {{provisionOfService.name}}
+          </p>
+          <p style="font-weight: bold; font-size: 1.2rem;" class="card-text">
+            Servicio: {{provisionOfService.service.name}}
+          </p>
+          <p style="font-weight: bold; font-size: 1.2rem;" class="card-text">
+            Establecimiento: {{provisionOfService.establishment.name}}-{{provisionOfService.establishment.description}}
+          </p>
+          <p style="font-weight: bold;" class="card-text">
+            Ingrese una descripción para la apertura del incidente
+          </p>
+          <form action="/incidents/create" method="POST">
+            <input type="hidden" name="provisionOfServiceId" value="{{provisionOfService.id}}">
+            <input type="hidden" name="idCommunity" value="{{idCommunity}}">
+            <div>
+              <textarea class="form-control" name="textTareaCierreIncidente" rows="5" style="resize: vertical;" required
+                placeholder="Registra un nuevo incidente en tus comunidades. Completa los detalles necesarios, como ubicación, descripción del incidente y cualquier información relevante. Ayúdanos a mejorar la accesibilidad y la calidad de los servicios en tu ciudad."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary"
+              style="width: 25rem; margin: 1rem; font-weight: bold; font-size: 1.2rem;"
+             >
+              Reportar incidente
+            </button>
+            <div class="form-check" style="margin-top: 1rem;">
+              <input type="checkbox" class="form-check-input" id="reportarTodasComunidades"
+                name="reportarTodasComunidades">
+              <label class="form-check-label" for="reportarTodasComunidades">Reportar en todas sus comunidades</label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}

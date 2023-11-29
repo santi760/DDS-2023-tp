@@ -1,0 +1,2 @@
+.columna {   padding: 10px;   flex: 25%; }
+.fila{   display: flex;   padding: 5px;   flex-wrap: wrap; }

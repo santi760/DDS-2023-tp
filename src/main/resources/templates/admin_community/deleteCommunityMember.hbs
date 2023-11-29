@@ -1,0 +1,57 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="card-title">Eliminar Miembro de la Comunidad</h2>
+
+                <form id="communityMemberForm">
+                    <div class="form-group">
+                        <label for="communityMember"><b>Miembro de la Comunidad:</b></label>
+                        <select name="select_community_member" class="form-control form-control-lg" id="communityMember">
+                            {{#each communityMembers}}
+                                <option value="{{this.id}}">{{id}}</option>
+                            {{/each}}
+                            <option value="" hidden>Seleccionar Miembro de la Comunidad</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="/dashboard" type="button" id="eliminarCommunityMember" class="btn btn-primary btn-lg mt-3">Eliminar Miembro de la Comunidad</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}
+
+<script>
+    document.getElementById("eliminarCommunityMember").addEventListener("click", function () {
+        // Obtén el valor seleccionado del <select>
+        const communityMemberSelect = document.getElementById("communityMember");
+        const selectedCommunityMember = communityMemberSelect.options[communityMemberSelect.selectedIndex].value;
+
+        // Crea un objeto JSON con los datos que deseas enviar al backend
+        const data = {
+            select_community_member: selectedCommunityMember
+        };
+
+        // Realiza la solicitud POST al backend utilizando Fetch
+        fetch("deleteCommunityMember", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+                .then(response => response.json())
+                .then(result => {
+                    // Maneja la respuesta del servidor si es necesario
+                    console.log(result);
+                })
+                .catch(error => {
+                    // Maneja los errores de la solicitud
+                    console.error(error);
+                });
+    });
+</script>

@@ -1,0 +1,27 @@
+@startuml
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}
+
+class PasswordValidator {
+List<String> validate(user,password)
+}
+
+class Passwor10000Validation implements ValidationType {
+}
+class PasswordLengthValidation implements ValidationType {
+}
+class PasswordUsernameValidation implements ValidationType {
+}
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+
+@enduml

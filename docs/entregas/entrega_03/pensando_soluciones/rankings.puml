@@ -1,0 +1,92 @@
+@startuml
+
+CronTaskReport -->"*" ProviderEntity
+ProviderEntity --> Report
+Report -->"*" Ranking
+
+
+class CronTaskReport {
+ obtiene todos los prestadores
+ y a cada uno le carga su ranking personalizado
+ a su historialDeReportes.
+
+
+}
+
+class ProviderEntity {
+    lista de entidades
+    list<Report> historialDeReportes
+    Report reporteQueQuieroTodasLasSemanas
+
+    void agregarReporteAlHistorial(Report)
+
+}
+
+
+interface Ranking {
+    void generar(Entidades)
+    List<Entity> obtenerDatosRanking()
+    String getName()
+}
+
+class EntitiesAverageCloseTime1 implements Ranking {
+    String name
+    list<Entity> entities
+}
+
+class EntitiesReportedIncidents1 implements Ranking{
+    String name
+    list<Entity> entities
+}
+
+class EntitiesImpactDegree1 implements Ranking{
+    String name
+    list<Entity> entities
+}
+
+
+class Report implements Exportable {
+    -String name
+    -List<Raking> rankings
+    +void generarRankings(Entidades)
+    +void addRanking(Ranking ranking)
+}
+
+
+
+' -------abajo extrategia modulo exportador:---------
+
+ExportToPDF --> AdapterExporterToPDF
+Exporter --> ExporterStrategy
+Exporter --> Exportable
+
+class Exporter {
+    documentoAExportar : Exportable
+    estrategia : ExporterStrategy
+    cambiarEstrategia(ExporterStrategy)
+}
+
+interface Exportable {
+    reportData() : Map<String,List<String>>
+}
+
+interface ExporterStrategy {
+     export(Exportable) : String
+}
+
+class ExportToPDF implements  ExporterStrategy {
+
+    adapter: AdapterPDFExporter
+    export(Exportable) : String
+}
+
+interface AdapterExporterToPDF {
+export(Exportable) : String
+}
+
+class AdapterApachePDFBox implements AdapterExporterToPDF{
+    export(Exportable) : String
+}
+
+@enduml
+

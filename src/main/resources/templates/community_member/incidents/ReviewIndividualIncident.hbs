@@ -1,0 +1,55 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo | Cierre de Incidente</title>
+    <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+{{#partial "contenido"}}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8" style="margin: 1rem;">
+            <div class="card">
+                <div class="card-body">
+                    <p style="font-weight: bold; font-size: 1.5rem;">
+                        Revision de incidente
+                    </p>
+                    <p style="font-weight: bold; font-size: 1.2rem;" class="card-text">
+                        {{!-- TODO HACER MODIFICACION EN EL BACKEND PARA QUE LA PROVISION DE SERVICIO TENGA LA
+                        CONCATENACION DE NOMRES DE SU SERVICIO Y ESTABLECIMIENTO --}}
+                        {{associatedProvisionOfService.name}}
+                    </p>
+                    <p style="font-weight: bold;" class="card-text">
+                        Ingrese una descripción si el incidente se encuentra cerrado
+                    </p>
+                    <form action="/incidents/review/{{incidentToReview.id}}/community/{{incidentToReview.community.id}}" method="POST">
+                        <div>
+                            <textarea class="form-control" name="textTareaCierreIncidente" rows="5"
+                                style="resize: vertical;"
+                                placeholder="Registra un nuevo incidente en tus comunidades. Completa los detalles necesarios, como ubicación, descripción del incidente y cualquier información relevante. Ayúdanos a mejorar la accesibilidad y la calidad de los servicios en tu ciudad."></textarea>
+                        </div>
+
+                        <div class="container text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-6" style="padding: 10px;">
+                                    <a href="/dashboard" class="btn btn-primary btn-block btn-lg font-weight-bold">
+                                        Sigue abierto
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-6" style="padding: 10px;">
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg font-weight-bold">
+                                        Cerrar
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/partial}}
+{{> templates/components/layout/LayoutBase }}

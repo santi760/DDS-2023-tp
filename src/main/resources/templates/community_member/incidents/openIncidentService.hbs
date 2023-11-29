@@ -1,0 +1,193 @@
+{{#partial "contenido"}}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | Reportar Incidente</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
+
+            .header {
+                text-align: center;
+                padding: 2rem;
+                background-color: #007bff;
+                color: white;
+                text-transform: uppercase;
+                letter-spacing: 4px;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+                margin-bottom: 1rem;
+                margin-top: 20px;
+                border-radius: 15px;
+            }
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-container {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .search-input {
+                width: 80%;
+                padding: 1rem;
+                border: none;
+                border-radius: 25px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                text-align: center; /* Centré el texto en el input */
+            }
+
+            .item-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 2rem;
+            }
+
+            .card {
+                border: 2px solid #007bff;
+                border-radius: 15px;
+                margin: 1.5rem;
+                padding: 1.5rem;
+                width: 300px;
+                background-color: white;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease-in-out;
+                text-align: center;
+            }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+            .card-title {
+                font-weight: bold;
+                font-size: 1.4rem;
+                color: #007bff;
+                margin: 0.5rem 0;
+            }
+
+            .card-description {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+                color: #555;
+            }
+
+            .report-button {
+                font-size: 1.2rem;
+                color: white;
+                background-color: #c82333; /* Cambié el color a rojo oscuro */
+                border: none;
+                border-radius: 15px;
+                padding: 1rem 2rem;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            }
+
+            .report-button:hover {
+                background-color: #9c2e3c; /* Cambié el color a un tono más oscuro de rojo */
+                color: #000;
+            }
+
+            .report-icon {
+                margin-right: 5px;
+            }
+
+            @media (max-width: 768px) {
+                .search-input {
+                    width: 80%;
+                }
+
+                .card {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="header">
+        {{#if esServicio}}
+            <h1>Seleccione un establecimiento sobre el cual reportar {{servicio.name}}</h1>
+        {{else}}
+            <h1>Seleccione un servicio del establecimiento {{establecimiento.name}} para reportar un incidente</h1>
+        {{/if}}
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="{{#if esServicio}}Buscar Establecimiento{{else}}Buscar Servicio{{/if}}" oninput="searchItems(this.value)">
+        </div>
+
+        <div class="item-container" id="itemContainer">
+            <!-- Cards will be dynamically added here based on search results -->
+        </div>
+    </div>
+
+    <script>
+        let servicio = { id: 0, name: 'Todos' };
+
+        function renderItems(filteredItems) {
+            const container = document.getElementById('itemContainer');
+            container.innerHTML = '';
+
+            filteredItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <p class="card-description">${item.name}  ${item.description}</p>
+                    <a href="/incidents/${item.id}/community/${item.idCommunity}" class="report-button">
+                        <span class="report-icon">🚨</span> Reportar
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function searchItems(query) {
+            const fetchData = async () => {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const items = [
+        {{#each provisionOfServices}}
+            { id: {{id}}, name: '{{#if esServicio}}{{establishment.name}}{{else}}{{service.name}}{{/if}}', description: '{{#if esServicio}}{{establishment.description}}{{else}}{{service.description}}{{/if}}', idCommunity: {{idCommunity}} },
+        {{/each}}
+        ];
+        resolve(items);
+    }, 500);
+});
+};
+
+fetchData().then(items => {
+const filteredItems = items.filter(item =>
+    item.name.toLowerCase().includes(query.toLowerCase()) ||
+    item.description.toLowerCase().includes(query.toLowerCase())
+);
+
+renderItems(filteredItems);
+});
+}
+
+searchItems('');
+    </script>
+
+    </body>
+    </html>
+
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}

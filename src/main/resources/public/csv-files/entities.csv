@@ -1,0 +1,5 @@
+nombre,descripcion,tipo(PUBLIC_TRANSPORT o ORGANIZATION),tipo de transporte (solo completar si el tipo es PUBLIC_TRANSPORT, SUBWAY o RAILWAY) <- esta linea no va en el archivo!
+Tren Mitre, Trenes Argetinos,PUBLIC_TRANSPORT,RAILWAY
+Tren Sarmiento,Trenes Argetinos,PUBLIC_TRANSPORT,RAILWAY
+Tren San Martin, Trenes Argetinos,PUBLIC_TRANSPORT,RAILWAY
+Tren Roca, Trenes Argetinos,PUBLIC_TRANSPORT,RAILWAY

@@ -1,0 +1,6 @@
+https://apis.datos.gob.ar/georef/api
+
+
+
+https://datosgobar.github.io/georef-ar-api/open-api/
+info de la rapi de a las url q le podemos pegar

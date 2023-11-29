@@ -1,0 +1,101 @@
+@startuml
+
+Member "*"<-- Community
+ServiceWithSections -->"*" Section
+PasswordValidator -->"*" ValidationType
+User --> Member
+PasswordValidator ..> User
+Location <-r- Station
+Transport --> TransportType
+Transport -l-> Station
+Station -d->"*" Service
+
+class Member {
+  -String name;
+  -String surname;
+  -String email;
+}
+
+class Community {
+ - String interest
+ - List<Member> members
+
+ void addMember(Member member)
+}
+
+
+abstract class Service {
+  - String name;
+  - String group;
+  - List<Service> services
+  - boolean available;
+}
+
+class CommonService extends Service{
+}
+
+class ServiceWithSections extends Service {
+}
+
+class Section {
+- String origin;
+- String destination;
+}
+
+
+
+class Railway implements TransportType{
+}
+
+class Station{
+- String name;
+- Location geographicLocation;
+- List<Service> servicesProvided;
+}
+
+class Subway implements TransportType{
+}
+
+class Transport{
+- String name;
+- TransportType transportType;
+- List<Station> stations;
+}
+
+interface TransportType {
+
+}
+
+class Location{
+  - float latitud
+  - float longitud
+}
+class PasswordValidator {
+List<String> validate(user)
+}
+
+interface ValidationType{
++public String getErrorMessage()
++public boolean validatePassword(user)
+}
+
+class Passwor10000Validation implements ValidationType {
+}
+
+class PasswordLengthValidation implements ValidationType {
+}
+
+class PasswordUsernameValidation implements ValidationType {
+}
+
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+class User {
+String username
+String Password
+}
+
+@enduml

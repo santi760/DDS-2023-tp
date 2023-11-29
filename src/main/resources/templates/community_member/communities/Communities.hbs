@@ -1,0 +1,338 @@
+{{#partial "contenido"}}
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo | Mis Comunidades</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+    </head>
+
+    <body>
+    <div style="aling-items:center; text-align:center">
+    {{#if state}}
+    <h1 style="margin-left: 12%;">Mis Comunidades</h1>
+    <div class="container" style="margin-left: 12%;">
+        {{#each comunidadesPersona}}
+            <div>
+                <div class="community">
+                    <a href="/communities/{{this.id}}">
+                        <div class="community-info">
+                            <img src="/images/lupa.png" alt="Ícono de Comunidad" class="community-icon">
+                            <p class="community-title">{{this.name}}</p>
+                        </div>
+                    </a>
+                        <p class="community-description">{{this.description}}</p>
+                    <div class="accordion">
+                        <button class="accordion-button">Servicios de Interés</button>
+                        <div class="accordion-content services">
+                            {{#each this.interetingSerices}}
+                                <div>
+                                    <p>{{this.name}}</p>
+                                    <button class="report-incident-button" data-type="service" data-community-id="{{../id}}" data-service-id="{{this.id}}">
+                                        <i class="fas fa-flag"></i> Reportar
+                                    </button>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="accordion">
+                        <button class="accordion-button">Establecimientos de Interés</button>
+                        <div class="accordion-content establishments">
+                            {{#each this.interetingEstablishment}}
+                                <div>
+                                    <p>{{this.name}} -</p>
+                                    <p>{{this.description}}</p>
+                                    <button class="report-incident-button" data-type="establishment" data-community-id="{{../id}}" data-establishment-id="{{this.id}}">
+                                        <i class="fas fa-flag"></i> Reportar
+                                    </button>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <!-- Contenedor para separar los botones -->
+                    <div class="buttons-container">
+                        <div class="report-buttons">
+                            <a href="/communities/{{this.id}}/incidents/1" class="report-button">Ver Incidentes Abiertos</a>
+                            <a href="/communities/{{this.id}}/incidents/0" class="report-button">Ver Incidentes Cerrados</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+            {{else}}
+                <div class="empty-state">
+                    <img src="/images/sad.svg" alt="Sad Face">
+                    <p class="empty-state-message">No estas en ninguna comunidad. Parece que eres nuevo.</p>
+                    <div class="action-buttons">
+                        <a href="javascript:history.back()" class="btn btn-secondary back-button">Volver</a>
+                        <a href="/communities/join" class="btn btn-primary create-button">Unirse a una Comunidad</a>
+                    </div>
+                </div>
+    {{/if}}
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var accordions = document.querySelectorAll(".accordion-button");
+            var reportButtons = document.querySelectorAll(".report-incident-button");
+
+            accordions.forEach(function (accordion) {
+                accordion.addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            });
+
+            reportButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type = this.getAttribute("data-type");
+                    var communityId = this.getAttribute("data-community-id");
+                    var incidentId;
+
+                    if (type === "service") {
+                        incidentId = this.getAttribute("data-service-id");
+                    } else if (type === "establishment") {
+                        incidentId = this.getAttribute("data-establishment-id");
+                    }
+
+                    var url = `/incident/community/${communityId}/${type}/${incidentId}`;
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
+    </body>
+
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Roboto', sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding-top: 70px;
+            }
+
+
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                margin: 20px;
+            }
+
+            .community {
+                border: 2px solid #3498db;
+                border-radius: 15px;
+                margin: 20px;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease-in-out;
+                min-height: 300px;
+            }
+
+            .community:hover {
+                transform: scale(1.05);
+                background-color: #ecf0f1;
+            }
+
+            .community a {
+                text-decoration: none;
+                color: #2c3e50;
+                text-align: center;
+            }
+
+            .community-title,
+            .community-description,
+            .accordion-content p {
+                margin: 10px 0;
+                color: #2c3e50;
+                font-size: 1.2rem;
+            }
+
+            .accordion {
+                background-color: #f9f9f9;
+                padding: 16px;
+                border: 1px solid #3498db;
+                border-radius: 10px;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .accordion:hover {
+                background-color: #f0f0f0;
+            }
+
+            .accordion-content {
+                display: none;
+                padding: 10px;
+                overflow: hidden;
+                border-top: 1px solid #ddd;
+            }
+
+            .accordion-content p {
+                margin: 10px 0;
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .accordion-button {
+                background-color: #3498db;
+                color: white;
+                padding: 10px;
+                border: none;
+                text-align: left;
+                cursor: pointer;
+                width: 100%;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+            .accordion-button:hover {
+                background-color: #1f68c1;
+            }
+
+            .report-buttons {
+                margin-top: 10px;
+            }
+
+            .buttons-container {
+                margin-top: 20px;
+            }
+
+            .report-button {
+                margin-bottom: 10px;
+                font-size: 1rem;
+                color: white;
+                border: none;
+                border-radius: 15px;
+                padding: 5px 10px;
+                cursor: pointer;
+                text-align: center;
+                width: 100%;
+                transition: background-color 0.3s;
+                margin-top: 10px;
+            }
+
+            .report-button:first-child {
+                background-color: #4CAF50;
+            }
+
+            .report-button:last-child {
+                background-color: #FF6347;
+            }
+
+            .report-button:hover {
+                background-color: #3498db;
+            }
+
+            @media only screen and (max-width: 768px) {
+                .container {
+                    justify-content: center;
+                }
+
+                .community {
+                    width: calc(50% - 40px);
+                }
+            }
+            .accordion-content > div {
+                  display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+            }
+
+            .accordion-content p {
+                margin: 10px 0;
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+                color: black; /* Cambiado a color negro para mejorar la legibilidad */
+                }
+
+            .report-incident-button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 15px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin-top: 5px;
+                font-size: 0.8rem;
+            }
+
+            .report-incident-button:hover {
+                background-color: #1f68c1;
+            }
+
+            .community-description {
+                font-size: 1rem; /* O ajusta el tamaño que desees */
+            }
+
+            .community-info {
+                display: flex;
+                align-items: center;
+            }
+
+            .community-icon {
+                margin-right: 10px; /* Ajusta el margen según sea necesario */
+            }
+
+            .community-title {
+                font-size: 1.5rem; /* Ajusta el tamaño según sea necesario */
+            }
+
+        .accordion-button:hover {
+            background-color: #1f68c1;
+            color: black; /* Cambia el color del texto al pasar el ratón */
+        }
+             .center-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            h1 {
+                /* Estilos mejorados para el título */
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #3498db;
+                margin-top: 20px;
+                margin-bottom: 30px; /* Ajusta según sea necesario */
+                text-align: center;
+            }
+
+            .empty-state {
+            text-align: center;
+            margin-top: 2rem;
+            }
+
+            .empty-state img {
+            width: 100px;
+            height: 100px;
+            }
+
+            .empty-state-message {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            }
+        </style>
+        </style>

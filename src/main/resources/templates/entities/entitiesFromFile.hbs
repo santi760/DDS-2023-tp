@@ -1,0 +1,27 @@
+<br><br><br>
+{{#partial "contenido"}}
+    <div>
+        <h2>Entidades Cargadas</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each entities}}
+                <tr>
+                    <td>{{ this.name }}</td>
+                    <td>{{ this.description }}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center;">
+        <a class="btn btn-primary" href="/providerEntity/entities">Volver</a>
+    </div>
+{{/partial}}
+{{> templates/components/layout/LayoutBaseProvider}}

@@ -1,0 +1,149 @@
+{{#partial "contenido"}}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo</title>
+        <link rel="icon" href="../images/logo-login.png" type="image/x-icon" sizes="16x16 32x32">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+    /* Estilos CSS existentes */
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .community {
+        border: 2px solid #007bff;
+        border-radius: 15px;
+        margin: 1.5rem;
+        padding: 1.5rem;
+        width: 100%;
+    }
+
+    .community-title {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: #007bff;
+        margin: 0;
+    }
+
+    .comment-box {
+        border: 2px solid #ccc;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .separator {
+        font-weight: bold;
+        font-size: 1.4rem;
+        color: #007bff;
+        margin: 1rem 0;
+    }
+
+    .action-button {
+        font-size: 1.2rem;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        /* Ajusta el tamaño del botón */
+        margin: 0 auto;
+        /* Centra el botón horizontalmente */
+        margin-top: 1rem;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .section-title {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: #007bff;
+        margin: 2rem 0 1rem;
+        text-align: center;
+    }
+
+    .items-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* Centra los elementos horizontalmente */
+        gap: 1rem;
+    }
+
+    .service-item {
+        width: calc(33.33% - 1rem);
+    }
+</style>
+<head>
+<h1
+    style="font-size: 3rem; font-weight: bold; text-align: center; color: #007bff; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); animation: neon-glow 1.5s infinite alternate; letter-spacing: 4px;">
+    Comunidad: {{community.name}}</h1>
+
+<div class="community">
+    <p class="community-title" style="margin-bottom: 1.5rem; text-decoration: none;">Seleccione un
+        servicio/establecimiento para remover:</p>
+    <div class="action-buttons" style="text-align: center; margin-bottom: 1.5rem;"> <!-- Más margen y sin subrayado -->
+        <a class="action-button" id="showServices" style="text-decoration: none; color:white">Servicios</a>
+        <a class="action-button" id="showEstablecimientos" style="text-decoration:none; color:white">Establecimientos</a>
+    </div>
+    <div class="services-list" style="display: none;">
+        <div class="items-container">
+            {{#each services}}
+            <div class="service-item">
+                <div class="card">
+                    <div class="card-body" style="text-align: center;">
+                        <h4 class="card-title">{{this.name}}</h4>
+                        <form action="/communities/{{community.id}}/remove/service/{{this.id}}" method="POST">
+                            <button class="action-button add-service" type="submit">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="establecimientos-list" style="display: none;">
+        <div class="items-container">
+            {{#each establishments}}
+            <div class="service-item">
+                <div class="card">
+                    <div class="card-body" style="text-align: center;">
+                        <h4 class="card-title">{{this.name}}</h4>
+                        <p class="card-description" style="font-size: 0.9rem;">{{this.description}}</p>
+                        <form action="/communities/{{community.id}}/remove/establishment/{{this.id}}" method="POST">
+                            <button class="action-button add-establecimiento" type="submit">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('showServices').addEventListener('click', function () {
+        document.querySelector('.services-list').style.display = 'block';
+        document.querySelector('.establecimientos-list').style.display = 'none';
+    });
+
+    document.getElementById('showEstablecimientos').addEventListener('click', function () {
+        document.querySelector('.establecimientos-list').style.display = 'block';
+        document.querySelector('.services-list').style.display = 'none';
+    });
+
+    const addButtons = document.querySelectorAll('.action-button.add-service, .action-button.add-establecimiento');
+    addButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const itemName = this.getAttribute('data-item-name');
+            document.querySelector('.confirm-action').style.display = 'block';
+            document.querySelector('#selected-item-name').textContent = itemName;
+        });
+    });
+
+</script>
+{{/partial}}
+{{> templates/components/layout/LayoutBase}}

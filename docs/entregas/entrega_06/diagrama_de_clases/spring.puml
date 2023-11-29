@@ -1,0 +1,195 @@
+@startuml
+
+ProvisionOfService --> Service
+ProvisionOfService --> Establishment
+ProvisionOfService --> Entity
+
+Establishment --> EstabLishmentType
+
+Community -->"*" Service
+CommunityMember "*"<-- Community
+CommunityMember -->"*" Entity
+
+CommunityMember -->"*" Service
+
+Entity --> EntityContainerType :x
+Entity --> "*" Establishment
+
+EntityContainerType -down-> EntityType
+EntityContainerType -down-> PublicTransportType
+
+Community -->"*" Incident
+
+Incident --> ProvisionOfService
+Incident --> CommunityMember
+
+Person --> User
+Person -->"*" CommunityMember
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+class Person {
+    List<CommunityMember>
+    User user;
+}
+
+class CommunityMember {
+    - User user;
+    - String name
+    - String surname
+    - String email
+
+    - Set<Service> interestingServices
+    - Set<Entity> interestingEntities
+    - Set<Establishment> establishmentOfInterest
+
+}
+
+class Community {
+    - String name
+    - Set<Service> interestingServices
+    - Set<CommunityMember> CommunityMembers
+    - Set<Incident> Openincidents
+    - Set<Incident> Closedincidents
+
+}
+
+class Service {
+  - String name;
+
+}
+
+class ProvisionOfService{
+    - Service Service;
+    - Establishment establishment;
+    - Entity entity;
+}
+
+class Establishment {
+    - String name;
+    - Location location
+    - EstabLishmentType typeEstablishment
+
+    - Province province
+    - Department departament
+    - Municipality municipality
+    - aLocality locality
+
+    +List<Incident> getIncidentsOfEstablishment()
+}
+
+class Entity {
+    - String name;
+    - TypeEntityContainer typeEntity
+    - Set<Establishment> establishments;
+    - Integer AverageOfIncidentsPerWeek;
+
+}
+
+
+class EntityContainerType {
+    -EntityType typeEntity
+    -TypePublicTransport PublicTransportType
+}
+
+enum EntityType {
+    PUBLIC_TRANSPORT,
+    ORGANIZATION;
+}
+enum PublicTransportType{
+    RAILWAY
+    SUBWAY
+}
+
+enum EstabLishmentType {
+    STATION,
+    SUCURSAL;
+}
+
+class User {
+    # String user;
+    # String password;
+
+
+}
+
+class Incident {
+    -CommunityMember creator;
+    -CommunityMember closer;
+    -LocalDateTime openingDate;
+    -LocalDateTime closingDate;
+    -String openingDescription;
+    -String closedDescription;
+    -ProvisionOfService provisionOfServiceAssociated;
+    -Boolean open;
+
+
+    + Municipality getMunicipality()
+    + Department getDepartment()
+    + Province getProvince()
+    + Locality getLocality()
+
+
+}
+
+
+
+
+
+
+class PasswordValidator {
+    -List<Validator> validators
+    +List<String> validate(user)
+}
+
+
+abstract class ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}
+
+
+User --> TypeRol
+
+
+enum TypeRol {
+    COMMUNITY_MEMBER,
+    PROVIDER,
+    CONTROL_ORGANISM
+    }
+
+
+
+
+@enduml
+-------------------------------------------------------------------------
+
+posicionar elementos arriba abajo izq derecha
+https://www.plantuml.com/plantuml/uml/SoWkIImgAStDuKhBprVGpKbDAz6rKqWfpSsjz06o8Q95cUaPSE4W40SYNbe04mmjW8Yav9VdmSHSW6mkXzIy593f0000
+
+
+class Passwor10000Validation implements ValidationType {
+}
+class PasswordLengthValidation implements ValidationType {
+}
+class PasswordUsernameValidation implements ValidationType {
+}
+class PasswordRepeatCharacters implements ValidationType {
+}
+class PasswordConsecutiveCharacter implements ValidationType {
+}
+
+
+PasswordValidator -->"*" ValidationType
+PasswordValidator ..> User
+
+class PasswordValidator {
+    +List<String> validate(user)
+}
+
+
+interface ValidationType{
+    +public String getErrorMessage()
+    +public boolean validatePassword(user)
+}

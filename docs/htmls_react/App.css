@@ -1,0 +1,145 @@
+
+/**------------------- NAV BAR -------------------*/
+
+.navbar {
+  background-color: #3E8FFA;
+  overflow: hidden;
+}
+
+.navbar-logo {
+  float: left;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navbar-buttons {
+  float: right;
+  padding: 15px;
+}
+
+.navbar-buttons button {
+  margin-left: 10px;
+}
+
+
+/**------------------- OTRA CATECORIA -------------------*/
+
+
+.titulo-blanco{
+  color: white;
+  font-size: 32px;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.texto-blanco{
+  color: white;
+  font-size: 16px;
+  
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/**------------------- CONTENEDOR PARA EL VIDEO Y SECTION PRIMER HOME -------------------*/
+
+.primer-home{
+  background-color: black;
+  height: 100vh;
+}
+
+.contenido-container {
+    flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .subtitulo-futuro{
+    width: 50%;
+  }
+  
+  .texto-section-01-home-container {
+    margin-left:3%;
+    
+    flex: 1;
+    word-break: break-word;
+    padding-right: 10px;
+  }
+
+  .video-container {
+    margin-left: 20px; /* Ajusta el margen según sea necesario */
+    margin-right: 60px;
+    justify-content: center;
+}
+
+.boton-estilizado {
+  background-color: #4CAF50; /* Color de fondo del botón */
+  display: inline-block;
+  color: white; /* Color del texto del botón */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border: none; /* Quita el borde del botón */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+/**------------------- SECTION 02 HOME -------------------*/
+
+.fullscreen-section {
+  height: 100vh;
+  background-color: #f8f8f8;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.section-2 {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #eaeaea;
+}
+
+.section-2-item {
+  flex: 1 1 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+.section-2-item h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.section-2-item p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+  
+/** --------------------- FOOTBAR --------------------- */
+
+
+/** --------------------- SEGUNDO DIV ---------------------*/
+.foto-container {
+    margin-left: 20px; /* Ajusta el margen según sea necesario */
+    margin-right: 60px;
+    justify-content: center;
+}
+
+.footBar{
+  background-color: black;
+  color:white;
+  display: flex;
+  justify-content: space-between;
+}
+  
+.section-foot {
+  margin: 3%;
+  margin-right: 10px;
+  flex: 1;
+  padding: 10px;
+}
