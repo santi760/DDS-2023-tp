@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class App {
   public static void main(String[] args) throws IOException {
-    Instanciado.main(args);
+    //Instanciado.main(args);
     //? ESTA COMENTADO PERO ANDA, ES PARA ACTIVAR LA CRONTASK QUE HACE QUE ENVIE LA NOTIFICACION DE INCIDENTE
     //? AL HORARIO ESTABLECIDO POR EL MEMBER
     //CronTaskNotificate.getInstance().start();
