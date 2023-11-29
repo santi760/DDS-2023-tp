@@ -331,17 +331,19 @@
 
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
         <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
+          <!-- Configuración específica del ensamblado si es necesaria -->
         </configuration>
         <executions>
           <execution>
-            <id>copy-dependencies</id>
+            <id>make-assembly</id>
             <phase>package</phase>
-            <goals><goal>assembly</goal></goals>
+            <goals>
+              <goal>single</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
